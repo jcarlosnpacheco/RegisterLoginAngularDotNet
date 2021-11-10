@@ -16,8 +16,8 @@ namespace ServiceOrderAPI.Application.Handlers
 
         public AddServiceOrderCommandHandler(IMediator mediator, IRepository<ServiceOrder> repository)
         {
-            this._mediator = mediator;
-            this._repository = repository;
+            _mediator = mediator;
+            _repository = repository;
         }
 
         public async Task<string> Handle(AddServiceOrderCommand request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ namespace ServiceOrderAPI.Application.Handlers
 
             try
             {
-                serviceOrder = await _repository.Add(serviceOrder);
+                await _repository.Add(serviceOrder);
 
                 await _mediator.Publish(new ServiceOrderAddedNotification { Id = serviceOrder.Id, Description = serviceOrder.Description, Date = serviceOrder.Date, Value = serviceOrder.Value });
 

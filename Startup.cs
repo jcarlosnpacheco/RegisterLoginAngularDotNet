@@ -1,11 +1,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ServiceOrderAPI.Application.Models;
+using ServiceOrderAPI.Application.Models.Context;
 using ServiceOrderAPI.Repositories;
 using System;
 
@@ -28,7 +30,7 @@ namespace ServiceOrderAPI
             #region MediatR
 
             services.AddMediatR(typeof(Startup));
-            services.AddSingleton<IRepository<ServiceOrder>, ServiceOrderRepository>();
+            services.AddTransient<IRepository<ServiceOrder>, ServiceOrderRepository>();
 
             #endregion MediatR
 
@@ -51,6 +53,11 @@ namespace ServiceOrderAPI
             });
 
             #endregion Swagger
+
+            #region DbContext
+            services.AddEntityFrameworkNpgsql()
+             .AddDbContext<ServiceOrderContext>(options => options.UseNpgsql(Configuration.GetConnectionString("ServiceOrderDB")));
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -16,8 +16,8 @@ namespace ServiceOrderAPI.Application.Handlers
 
         public EditServiceOrderCommandHandler(IMediator mediator, IRepository<ServiceOrder> repository)
         {
-            this._mediator = mediator;
-            this._repository = repository;
+            _mediator = mediator;
+            _repository = repository;
         }
 
         public async Task<string> Handle(EditServiceOrderCommand request, CancellationToken cancellationToken)

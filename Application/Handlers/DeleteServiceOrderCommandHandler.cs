@@ -16,15 +16,15 @@ namespace ServiceOrderAPI.Application.Handlers
 
         public DeleteServiceOrderCommandHandler(IMediator mediator, IRepository<ServiceOrder> repository)
         {
-            this._mediator = mediator;
-            this._repository = repository;
+            _mediator = mediator;
+            _repository = repository;
         }
 
         public async Task<string> Handle(DeleteServiceOrderCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                await _repository.Delete(request.Id);
+                _repository.Delete(request.Id);
 
                 await _mediator.Publish(new ServiceOrderDeletedNotification { Id = request.Id, IsDeleted = true });
 

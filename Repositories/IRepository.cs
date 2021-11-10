@@ -1,3 +1,4 @@
+using ServiceOrderAPI.Application.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,8 +12,8 @@ namespace ServiceOrderAPI.Repositories
 
         Task<T> Add(T item);
 
-        Task Edit(T item);
+        Task<T> Edit(T item);
 
-        Task Delete(int id);
+        void Delete(int id);
     }
 }
