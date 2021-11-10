@@ -1,10 +1,11 @@
 using ServiceOrderAPI.Application.Models;
 using ServiceOrderAPI.Application.Models.Context;
+using ServiceOrderAPI.Data.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ServiceOrderAPI.Repositories
+namespace ServiceOrderAPI.Data.Repositories
 {
     public class ServiceOrderRepository : IRepository<ServiceOrder>
     {

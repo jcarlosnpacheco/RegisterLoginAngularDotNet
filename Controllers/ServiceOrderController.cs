@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using ServiceOrderAPI.Application.Commands;
-using ServiceOrderAPI.Application.Models;
-using ServiceOrderAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using ServiceOrderAPI.Application.Commands;
+using ServiceOrderAPI.Data.Queries.Dapper.Interfaces;
 using System.Threading.Tasks;
 
 namespace ServiceOrderAPI.Controllers
@@ -12,24 +11,25 @@ namespace ServiceOrderAPI.Controllers
     public class ServiceOrderController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IRepository<ServiceOrder> _repository;
 
-        public ServiceOrderController(IMediator mediator, IRepository<ServiceOrder> repository)
+        private readonly IServiceOrderQueries _serviceOrderQueries;
+
+        public ServiceOrderController(IMediator mediator, IServiceOrderQueries serviceOrderQueries)
         {
-            this._mediator = mediator;
-            this._repository = repository;
+            _mediator = mediator;
+            _serviceOrderQueries = serviceOrderQueries;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _repository.GetAll());
+            return Ok(await _serviceOrderQueries.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _repository.Get(id));
+            return Ok(await _serviceOrderQueries.GetByIdAsync(id));
         }
 
         [HttpPost]

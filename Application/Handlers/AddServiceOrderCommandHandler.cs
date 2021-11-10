@@ -2,7 +2,7 @@ using MediatR;
 using ServiceOrderAPI.Application.Commands;
 using ServiceOrderAPI.Application.Models;
 using ServiceOrderAPI.Application.Notifications;
-using ServiceOrderAPI.Repositories;
+using ServiceOrderAPI.Data.Repositories.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

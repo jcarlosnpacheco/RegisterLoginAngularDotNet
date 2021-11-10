@@ -1,8 +1,7 @@
-using ServiceOrderAPI.Application.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceOrderAPI.Repositories
+namespace ServiceOrderAPI.Data.Repositories.Interfaces
 {
     public interface IRepository<T>
     {

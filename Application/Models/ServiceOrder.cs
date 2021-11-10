@@ -6,7 +6,7 @@ namespace ServiceOrderAPI.Application.Models
 {
     [Table("service")]
     public class ServiceOrder
-    {     
+    {
         [Key]
         [Column("id")]
         public int Id { get; set; }

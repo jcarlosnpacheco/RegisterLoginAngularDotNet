@@ -8,23 +8,28 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ServiceOrderAPI.Application.Models;
 using ServiceOrderAPI.Application.Models.Context;
-using ServiceOrderAPI.Repositories;
+using ServiceOrderAPI.Data.Queries.Dapper;
+using ServiceOrderAPI.Data.Queries.Dapper.Context;
+using ServiceOrderAPI.Data.Queries.Dapper.Interfaces;
+using ServiceOrderAPI.Data.Repositories;
+using ServiceOrderAPI.Data.Repositories.Interfaces;
 using System;
 
 namespace ServiceOrderAPI
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(_configuration);
             services.AddControllers();
 
             #region MediatR
@@ -55,9 +60,18 @@ namespace ServiceOrderAPI
             #endregion Swagger
 
             #region DbContext
+
             services.AddEntityFrameworkNpgsql()
-             .AddDbContext<ServiceOrderContext>(options => options.UseNpgsql(Configuration.GetConnectionString("ServiceOrderDB")));
-            #endregion
+             .AddDbContext<ServiceOrderContext>(options => options.UseNpgsql(_configuration.GetConnectionString("ServiceOrderDB")));
+
+            #endregion DbContext
+
+            #region Dapper
+
+            services.AddSingleton<DapperContext>();
+            services.AddScoped<IServiceOrderQueries, ServiceOrderQueries>();
+
+            #endregion Dapper
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
