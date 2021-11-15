@@ -2,18 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ServiceOrderAPI.Application.Models.Context;
+using ServiceOrderAPI.Infra.Data.Context;
 
 namespace ServiceOrderAPI.Migrations
 {
-    [DbContext(typeof(ServiceOrderContext))]
-    [Migration("20211115135613_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(DBServiceOrderContext))]
+    partial class DBServiceOrderContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +19,7 @@ namespace ServiceOrderAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("ServiceOrderAPI.Application.Models.ServiceOrder", b =>
+            modelBuilder.Entity("ServiceOrderAPI.Business.Models.ServiceOrderModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ServiceOrderAPI.Application.Commands;
-using ServiceOrderAPI.Data.Queries.Dapper.Interfaces;
+using ServiceOrderAPI.Business.Commands;
+using ServiceOrderAPI.Business.Interfaces.Queries;
 using System.Threading.Tasks;
 
-namespace ServiceOrderAPI.Controllers
+namespace ServiceOrderAPI.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -33,14 +33,14 @@ namespace ServiceOrderAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(AddServiceOrderCommand command)
+        public async Task<IActionResult> Post(CreateServiceOrderCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(EditServiceOrderCommand command)
+        public async Task<IActionResult> Put(UpdateServiceOrderCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);

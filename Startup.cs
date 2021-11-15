@@ -6,16 +6,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ServiceOrderAPI.Application.Models;
-using ServiceOrderAPI.Application.Models.Context;
-using ServiceOrderAPI.Data.Queries.Dapper;
-using ServiceOrderAPI.Data.Queries.Dapper.Context;
-using ServiceOrderAPI.Data.Queries.Dapper.Interfaces;
-using ServiceOrderAPI.Data.Repositories;
-using ServiceOrderAPI.Data.Repositories.Interfaces;
+using ServiceOrderAPI.Business.Interfaces.Queries;
+using ServiceOrderAPI.Business.Interfaces.Repositories;
+using ServiceOrderAPI.Business.Models;
+using ServiceOrderAPI.Infra.Data.Context;
+using ServiceOrderAPI.Infra.Data.Queries;
+using ServiceOrderAPI.Infra.Data.Queries.Dapper.Context;
+using ServiceOrderAPI.Infra.Data.Repositories;
 using System;
 
-namespace ServiceOrderAPI
+namespace ServiceOrderAPI.API
 {
     public class Startup
     {
@@ -33,9 +33,11 @@ namespace ServiceOrderAPI
             services.AddControllers();
 
             #region MediatR
-
-            services.AddMediatR(typeof(Startup));
-            services.AddTransient<IRepository<ServiceOrder>, ServiceOrderRepository>();
+            //reference Handler in other class library
+            var assembly = AppDomain.CurrentDomain.Load("Business");
+            services.AddMediatR(assembly);
+                        
+            services.AddTransient<IGenericRepository<ServiceOrderModel>, ServiceOrderRepository>();
 
             #endregion MediatR
 
@@ -43,6 +45,7 @@ namespace ServiceOrderAPI
 
             services.AddSwaggerGen(options =>
             {
+                var url = "https://github.com/jcarlosnpacheco";
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
@@ -52,7 +55,7 @@ namespace ServiceOrderAPI
                         Contact = new OpenApiContact
                         {
                             Name = "João Pacheco",
-                            Url = new Uri("https://github.com/jcarlosnpacheco")
+                            Url = new Uri(url)
                         }
                     });
             });
@@ -62,7 +65,10 @@ namespace ServiceOrderAPI
             #region DbContext
 
             services.AddEntityFrameworkNpgsql()
-             .AddDbContext<ServiceOrderContext>(options => options.UseNpgsql(_configuration.GetConnectionString("ServiceOrderDB")));
+             .AddDbContext<DBServiceOrderContext>(
+                options => options.UseNpgsql(_configuration.GetConnectionString("ServiceOrderDB"),
+                                            b => b.MigrationsAssembly("ServiceOrderAPI"))
+             );
 
             #endregion DbContext
 
