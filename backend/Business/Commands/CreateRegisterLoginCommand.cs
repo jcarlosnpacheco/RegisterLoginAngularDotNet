@@ -1,11 +1,10 @@
 using MediatR;
 using System;
 
-namespace ServiceOrderAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Commands
 {
-    public class ServiceOrderCreatedNotification : INotification
+    public class CreateRegisterLoginCommand : IRequest<string>
     {
-        public int Id { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public double Value { get; set; }

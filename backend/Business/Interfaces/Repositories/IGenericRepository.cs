@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceOrderAPI.Business.Interfaces.Repositories
+namespace RegisterLoginAPI.Business.Interfaces.Repositories
 {
     public interface IGenericRepository<T>
     {

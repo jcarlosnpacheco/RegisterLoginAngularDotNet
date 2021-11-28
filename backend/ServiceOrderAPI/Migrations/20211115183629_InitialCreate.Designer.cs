@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ServiceOrderAPI.Infra.Data.Context;
+using RegisterLoginAPI.Infra.Data.Context;
 
-namespace ServiceOrderAPI.Migrations
+namespace RegisterLoginAPI.Migrations
 {
-    [DbContext(typeof(DBServiceOrderContext))]
+    [DbContext(typeof(DBRegisterLoginContext))]
     [Migration("20211115183629_InitialCreate")]
     partial class InitialCreate
     {

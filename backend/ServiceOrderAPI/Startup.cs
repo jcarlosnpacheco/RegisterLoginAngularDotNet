@@ -1,3 +1,4 @@
+using Business.Models;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,16 +7,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ServiceOrderAPI.Business.Interfaces.Queries;
-using ServiceOrderAPI.Business.Interfaces.Repositories;
-using ServiceOrderAPI.Business.Models;
-using ServiceOrderAPI.Infra.Data.Context;
-using ServiceOrderAPI.Infra.Data.Queries;
-using ServiceOrderAPI.Infra.Data.Queries.Dapper.Context;
-using ServiceOrderAPI.Infra.Data.Repositories;
+using RegisterLoginAPI.Business.Interfaces.Queries;
+using RegisterLoginAPI.Business.Interfaces.Repositories;
+using RegisterLoginAPI.Business.Models;
+using RegisterLoginAPI.Infra.Data.Context;
+using RegisterLoginAPI.Infra.Data.Queries;
+using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
+using RegisterLoginAPI.Infra.Data.Repositories;
 using System;
 
-namespace ServiceOrderAPI.API
+namespace RegisterLoginAPI.API
 {
     public class Startup
     {
@@ -37,7 +38,8 @@ namespace ServiceOrderAPI.API
             var assembly = AppDomain.CurrentDomain.Load("Business");
             services.AddMediatR(assembly);
                         
-            services.AddTransient<IGenericRepository<ServiceOrderModel>, ServiceOrderRepository>();
+            services.AddTransient<IGenericRepository<RegisterLoginModel>, RegisterLoginRepository>();
+            services.AddTransient<IGenericRepository<LoginTypeModel>, LoginTypeRepository>();
 
             #endregion MediatR
 
@@ -49,9 +51,9 @@ namespace ServiceOrderAPI.API
                 options.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
-                        Title = "Service Order API",
+                        Title = "Register Login API",
                         Version = "v1",
-                        Description = "API Sample for Service Order with ASP.NET Core",
+                        Description = "API Sample for register yours logins with ASP.NET Core",
                         Contact = new OpenApiContact
                         {
                             Name = "João Pacheco",
@@ -65,9 +67,9 @@ namespace ServiceOrderAPI.API
             #region DbContext
 
             services.AddEntityFrameworkNpgsql()
-             .AddDbContext<DBServiceOrderContext>(
-                options => options.UseNpgsql(_configuration.GetConnectionString("ServiceOrderDB"),
-                                            b => b.MigrationsAssembly("ServiceOrderAPI"))
+             .AddDbContext<DBRegisterLoginContext>(
+                options => options.UseNpgsql(_configuration.GetConnectionString("RegisterLoginDB"),
+                                            b => b.MigrationsAssembly("RegisterLoginAPI"))
              );
 
             #endregion DbContext
@@ -75,7 +77,7 @@ namespace ServiceOrderAPI.API
             #region Dapper
 
             services.AddSingleton<DapperContext>();
-            services.AddScoped<IServiceOrderQueries, ServiceOrderQueries>();
+            services.AddScoped<IRegisterLoginQueries, RegisterLoginQueries>();
 
             #endregion Dapper
         }
@@ -87,7 +89,7 @@ namespace ServiceOrderAPI.API
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "swagger";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Service Order API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Register Login API");
             });
 
             if (env.IsDevelopment())

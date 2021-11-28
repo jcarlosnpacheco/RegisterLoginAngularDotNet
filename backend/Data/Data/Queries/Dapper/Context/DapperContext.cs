@@ -2,7 +2,7 @@
 using Npgsql;
 using System.Data;
 
-namespace ServiceOrderAPI.Infra.Data.Queries.Dapper.Context
+namespace RegisterLoginAPI.Infra.Data.Queries.Dapper.Context
 {
     //TODO - https://code-maze.com/using-dapper-with-asp-net-core-web-api/
     public class DapperContext
@@ -13,7 +13,7 @@ namespace ServiceOrderAPI.Infra.Data.Queries.Dapper.Context
         public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("ServiceOrderDB");
+            _connectionString = _configuration.GetConnectionString("RegisterLoginDB");
         }
 
         public IDbConnection CreateConnection() => new NpgsqlConnection(_connectionString);

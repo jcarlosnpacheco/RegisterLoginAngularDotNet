@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ServiceOrderAPI.Infra.Data.Context;
+using RegisterLoginAPI.Infra.Data.Context;
 
-namespace ServiceOrderAPI.Migrations
+namespace RegisterLoginAPI.Migrations
 {
-    [DbContext(typeof(DBServiceOrderContext))]
+    [DbContext(typeof(DBRegisterLoginContext))]
     partial class DBServiceOrderContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

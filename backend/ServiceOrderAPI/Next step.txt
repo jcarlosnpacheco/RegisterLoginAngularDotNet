@@ -1,3 +1,4 @@
-1 - Create class Types of services
-2 - Reference Service with Type of services (including mapping references)
-3 - Start Angular's front-end 
+1 - Adjust queries Login Type - OK
+2 - Adjust Handlers and Command's - Pending
+3 - Create controller to Login Type - Pending
+4 - Update-database migration

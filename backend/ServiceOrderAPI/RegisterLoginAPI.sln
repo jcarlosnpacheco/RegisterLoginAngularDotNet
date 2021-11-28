@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceOrderAPI", "ServiceOrderAPI.csproj", "{14469EA8-D76B-4794-99D4-C00EF70C1FD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegisterLoginAPI", "RegisterLoginAPI.csproj", "{14469EA8-D76B-4794-99D4-C00EF70C1FD9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{24E1E7B6-0068-4771-9E21-ED13026C6620}"
 EndProject
@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{D1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{A9C556A7-621E-4F11-BB79-5A5A86CC501E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\Data\Data.csproj", "{6F2BE9E5-DFF9-4C69-9228-ABAD412ED785}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\Data\Data.csproj", "{6F2BE9E5-DFF9-4C69-9228-ABAD412ED785}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "..\Business\Business.csproj", "{A9DF1561-7DB4-458C-ADCC-229BE8E22D7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "..\Business\Business.csproj", "{A9DF1561-7DB4-458C-ADCC-229BE8E22D7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

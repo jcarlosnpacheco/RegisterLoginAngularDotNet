@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace ServiceOrderAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Notifications
 {
     public class ErrorNotification : INotification
     {

@@ -1,18 +1,18 @@
 using MediatR;
-using ServiceOrderAPI.Business.Notifications;
+using RegisterLoginAPI.Business.Notifications;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ServiceOrderAPI.Business.EventHandlers
+namespace RegisterLoginAPI.Business.EventHandlers
 {
     public class LogEventHandler :
-                                INotificationHandler<ServiceOrderCreatedNotification>,
-                                INotificationHandler<ServiceOrderUpdatedNotification>,
-                                INotificationHandler<ServiceOrderDeletedNotification>,
+                                INotificationHandler<RegisterLoginCreatedNotification>,
+                                INotificationHandler<RegisterLoginUpdatedNotification>,
+                                INotificationHandler<RegisterLoginDeletedNotification>,
                                 INotificationHandler<ErrorNotification>
     {
-        public Task Handle(ServiceOrderCreatedNotification notification, CancellationToken cancellationToken)
+        public Task Handle(RegisterLoginCreatedNotification notification, CancellationToken cancellationToken)
         {
             return Task.Run(() =>
             {
@@ -20,7 +20,7 @@ namespace ServiceOrderAPI.Business.EventHandlers
             });
         }
 
-        public Task Handle(ServiceOrderUpdatedNotification notification, CancellationToken cancellationToken)
+        public Task Handle(RegisterLoginUpdatedNotification notification, CancellationToken cancellationToken)
         {
             return Task.Run(() =>
             {
@@ -28,7 +28,7 @@ namespace ServiceOrderAPI.Business.EventHandlers
             });
         }
 
-        public Task Handle(ServiceOrderDeletedNotification notification, CancellationToken cancellationToken)
+        public Task Handle(RegisterLoginDeletedNotification notification, CancellationToken cancellationToken)
         {
             return Task.Run(() =>
             {

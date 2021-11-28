@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ServiceOrderAPI.Migrations
+namespace RegisterLoginAPI.Migrations
 {
     public partial class InitialCreate : Migration
     {

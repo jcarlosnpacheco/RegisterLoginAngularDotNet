@@ -1,9 +1,9 @@
 using MediatR;
 using System;
 
-namespace ServiceOrderAPI.Business.Commands
+namespace RegisterLoginAPI.Business.Commands
 {
-    public class UpdateServiceOrderCommand : IRequest<string>
+    public class UpdateRegisterLoginCommand : IRequest<string>
     {
         public int Id { get; set; }
         public string Description { get; set; }

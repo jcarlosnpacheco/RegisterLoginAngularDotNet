@@ -1,9 +1,9 @@
 using MediatR;
 using System;
 
-namespace ServiceOrderAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Notifications
 {
-    public class ServiceOrderUpdatedNotification : INotification
+    public class RegisterLoginUpdatedNotification : INotification
     {
         public int Id { get; set; }
         public string Description { get; set; }
