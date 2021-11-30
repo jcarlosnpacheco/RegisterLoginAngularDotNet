@@ -1,6 +1,6 @@
-namespace RegisterLoginAPI.Business.Models
+namespace RegisterLoginAPI.Business.Entity
 {
-    public class RegisterLoginModel
+    public class RegisterLogin
     {
         public int Id { get; set; }
 
@@ -10,6 +10,6 @@ namespace RegisterLoginAPI.Business.Models
 
         public string Observation { get; set; }
 
-        public int LoginTypeId { get; set; }
+        public LoginType LoginType { get; set; }
     }
 }

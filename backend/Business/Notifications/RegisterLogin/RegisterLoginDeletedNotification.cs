@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace RegisterLoginAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Notifications.RegisterLogin
 {
     public class RegisterLoginDeletedNotification : INotification
     {

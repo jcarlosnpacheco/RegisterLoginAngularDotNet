@@ -1,11 +1,22 @@
-using Business.Models;
+using Business.Commands.Generics;
 using MediatR;
 
 namespace RegisterLoginAPI.Business.Commands
 {
-    public class CreateLoginTypeCommand : IRequest<string>
+    public class CreateLoginTypeCommand : IRequest<GenericCommandResult>
     {
-        //TODO: Verify this property, how will be
-        public LoginTypeModel LoginType { get; set; }
+        public int Id { get; protected set; }
+
+        public string Name { get; protected set; }
+
+        #region Methods
+
+        public CreateLoginTypeCommand(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        #endregion Methods
     }
 }

@@ -1,57 +1,73 @@
+using Business.Commands.Generics;
 using MediatR;
 using RegisterLoginAPI.Business.Commands;
-using RegisterLoginAPI.Business.Models;
-using RegisterLoginAPI.Business.Notifications;
+using RegisterLoginAPI.Business.Entity;
+using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
+using RegisterLoginAPI.Business.Notifications;
+using RegisterLoginAPI.Business.Notifications.RegisterLogin;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RegisterLoginAPI.Business.Handlers
 {
-    public class UpdateLoginTypeCommandHandler : IRequestHandler<UpdateLoginTypeCommand, string>
+    public class UpdateLoginTypeCommandHandler : IRequestHandler<UpdateLoginTypeCommand, GenericCommandResult>
     {
         private readonly IMediator _mediator;
-        private readonly IGenericRepository<RegisterLoginModel> _repository;
+        private readonly IGenericRepository<LoginType> _repository;
+        private readonly ILoginTypeQueries _loginTypeQueries;
 
-        public UpdateLoginTypeCommandHandler(IMediator mediator, IGenericRepository<RegisterLoginModel> repository)
+        public UpdateLoginTypeCommandHandler(
+            IMediator mediator,
+            IGenericRepository<LoginType> repository,
+            ILoginTypeQueries loginTypeQueries)
         {
             _mediator = mediator;
             _repository = repository;
+            _loginTypeQueries = loginTypeQueries;
         }
 
-        public async Task<string> Handle(UpdateLoginTypeCommand request, CancellationToken cancellationToken)
+        public async Task<GenericCommandResult> Handle(UpdateLoginTypeCommand request, CancellationToken cancellationToken)
         {
-            var loginType = new RegisterLoginModel
-            {
-                //Id = request.Id,
-                //Name = request.Name
-            };
+            //TODO - create flunt validation
 
-            try
-            {
-                await _repository.Update(loginType);
+            var loginType = await _loginTypeQueries.GetByIdAsync(request.Id);
 
-                //TODO: Create notification to UpdateLoginTypeCommandHandler
-                await _mediator.Publish(new RegisterLoginUpdatedNotification
+            if (loginType is not null)
+            {
+                try
                 {
-                    //Id = request.Id,
-                    //Name = request.Name
-                    IsEdited = true
-                });
+                    loginType.Name = request.Name;
 
-                return await Task.FromResult("Login Type successfully modified");
+                    await _repository.Update(loginType);
+
+                    await _mediator.Publish(new LoginTypeUpdatedNotification
+                    {
+                        Id = request.Id,
+                        Name = request.Name,
+                        IsEdited = true
+                    });
+
+                    return new GenericCommandResult(true, "Successfully updated", loginType);
+                }
+                catch (Exception ex)
+                {
+                    await _mediator.Publish(new LoginTypeUpdatedNotification
+                    {
+                        Id = request.Id,
+                        Name = request.Name,
+                        IsEdited = false
+                    });
+
+                    await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
+
+                    return new GenericCommandResult(true, "Fail on update", loginType);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                await _mediator.Publish(new RegisterLoginUpdatedNotification
-                {
-                    //Id = request.Id,
-                    //Name = request.Name
-                    IsEdited = false
-                });
-                await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
-                return await Task.FromResult("Fail on edit Login Type");
+                return new GenericCommandResult(true, "Login Type not found", loginType);
             }
         }
     }

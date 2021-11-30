@@ -49,7 +49,7 @@ namespace RegisterLoginAPI.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var obj = new DeleteLoginTypeCommand { Id = id };
+            var obj = new DeleteLoginTypeCommand(id);
             var result = await _mediator.Send(obj);
             return Ok(result);
         }

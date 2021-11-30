@@ -1,7 +1,7 @@
 using Business.Models;
 using MediatR;
 
-namespace RegisterLoginAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Notifications.RegisterLogin
 {
     public class RegisterLoginUpdatedNotification : INotification
     {
@@ -13,7 +13,7 @@ namespace RegisterLoginAPI.Business.Notifications
 
         public string Observation { get; set; }
 
-        public LoginTypeModel LoginType { get; set; }
+        public int LoginTypeId { get; set; }
 
         public bool IsEdited { get; set; }
     }

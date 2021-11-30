@@ -1,6 +1,6 @@
-﻿namespace Business.Models
+﻿namespace RegisterLoginAPI.Business.Entity
 {
-    public class LoginTypeModel
+    public class LoginType
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -3,3 +3,4 @@
 3 - Create controller to Login Type - OK
 4 - Update-database migration - Pending
 5 - Implement flund validation - Pending
+6 - Create test class library

@@ -40,7 +40,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] CreateRegisterLoginCommand command)
+        public async Task<IActionResult> Put([FromBody] UpdateRegisterLoginCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
@@ -49,7 +49,7 @@ namespace RegisterLoginAPI.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var obj = new DeleteRegisterLoginCommand { Id = id };
+            var obj = new DeleteRegisterLoginCommand(id);
             var result = await _mediator.Send(obj);
             return Ok(result);
         }

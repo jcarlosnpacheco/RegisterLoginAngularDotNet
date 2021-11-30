@@ -1,4 +1,3 @@
-using Business.Models;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using RegisterLoginAPI.Business.Entity;
 using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
-using RegisterLoginAPI.Business.Models;
 using RegisterLoginAPI.Infra.Data.Context;
 using RegisterLoginAPI.Infra.Data.Queries;
 using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
@@ -30,18 +29,28 @@ namespace RegisterLoginAPI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*
+             * Transient objects are always different; a new instance is provided to every controller and every service.
+             * Scoped objects are the same within a request, but different across different requests.
+             * Singleton objects are the same for every object and every request.*/
+
             services.AddSingleton(_configuration);
             services.AddControllers();
 
             #region MediatR
+
             //reference Handler in other class library
             var assembly = AppDomain.CurrentDomain.Load("Business");
             services.AddMediatR(assembly);
-                        
-            services.AddTransient<IGenericRepository<RegisterLoginModel>, RegisterLoginRepository>();
-            services.AddTransient<IGenericRepository<LoginTypeModel>, LoginTypeRepository>();
 
             #endregion MediatR
+
+            #region repository
+
+            services.AddTransient<IGenericRepository<RegisterLogin>, RegisterLoginRepository>();
+            services.AddTransient<IGenericRepository<LoginType>, LoginTypeRepository>();
+
+            #endregion repository
 
             #region Swagger
 
@@ -77,7 +86,7 @@ namespace RegisterLoginAPI.API
             #region Dapper
 
             services.AddSingleton<DapperContext>();
-            services.AddScoped<IRegisterLoginQueries, RegisterLoginQueries>();
+            services.AddTransient<IRegisterLoginQueries, RegisterLoginQueries>();
 
             #endregion Dapper
         }

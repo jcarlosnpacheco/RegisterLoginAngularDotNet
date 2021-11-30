@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using RegisterLoginAPI.Business.Models;
-using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
+using RegisterLoginAPI.Business.Entity;
 using RegisterLoginAPI.Business.Interfaces.Queries;
+using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ namespace RegisterLoginAPI.Infra.Data.Queries
 
         public RegisterLoginQueries(DapperContext dapperContext) => _dapperContext = dapperContext;
 
-        public async Task<ICollection<RegisterLoginModel>> GetAllAsync()
+        public async Task<ICollection<RegisterLogin>> GetAllAsync()
         {
             var query = new StringBuilder($@"SELECT id AS ""Id"",
                                              login_name AS ""LoginName"",
@@ -25,11 +25,11 @@ namespace RegisterLoginAPI.Infra.Data.Queries
                                              FROM service");
 
             using var connection = _dapperContext.CreateConnection();
-            var registers = await connection.QueryAsync<RegisterLoginModel>(query.ToString());
+            var registers = await connection.QueryAsync<RegisterLogin>(query.ToString());
             return registers.ToList();
         }
 
-        public async Task<RegisterLoginModel> GetByIdAsync(int idRegisterLogin)
+        public async Task<RegisterLogin> GetByIdAsync(int idRegisterLogin)
         {
             var query = new StringBuilder($@"SELECT id AS ""Id"",
                                                     login_name AS ""LoginName"",
@@ -40,7 +40,7 @@ namespace RegisterLoginAPI.Infra.Data.Queries
                                              WHERE id = { idRegisterLogin }");
 
             using var connection = _dapperContext.CreateConnection();
-            return await connection.QueryFirstOrDefaultAsync<RegisterLoginModel>(query.ToString());
+            return await connection.QueryFirstOrDefaultAsync<RegisterLogin>(query.ToString());
         }
     }
 }

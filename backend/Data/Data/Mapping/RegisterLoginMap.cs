@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RegisterLoginAPI.Business.Models;
+using RegisterLoginAPI.Business.Entity;
 
 namespace Infra.Data.Mapping
 {
-    public class RegisterLoginMap : IEntityTypeConfiguration<RegisterLoginModel>
+    public class RegisterLoginMap : IEntityTypeConfiguration<RegisterLogin>
     {
-        public void Configure(EntityTypeBuilder<RegisterLoginModel> builder)
+        public void Configure(EntityTypeBuilder<RegisterLogin> builder)
         {
             builder.ToTable("register_login");
 
@@ -18,6 +18,7 @@ namespace Infra.Data.Mapping
 
             builder.Property(r => r.Id)
                 .HasColumnName("id")
+                .IsRequired()
                 .ValueGeneratedOnAdd();
 
             builder.Property(r => r.LoginName)
@@ -39,7 +40,7 @@ namespace Infra.Data.Mapping
 
             builder.HasOne(r => r.LoginType)
                 .WithOne()
-                .HasForeignKey("login_type")
+                .HasForeignKey<LoginType>(r => r.Id)
                 .HasConstraintName("FK_Login_Type");
 
             #endregion relationship

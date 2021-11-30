@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using RegisterLoginAPI.Business.Models;
+﻿using RegisterLoginAPI.Business.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,8 +6,8 @@ namespace RegisterLoginAPI.Business.Interfaces.Queries
 {
     public interface ILoginTypeQueries
     {
-        Task<ICollection<LoginTypeModel>> GetAllAsync();
+        Task<ICollection<LoginType>> GetAllAsync();
 
-        Task<LoginTypeModel> GetByIdAsync(int idLoginType);
+        Task<LoginType> GetByIdAsync(int idLoginType);
     }
 }

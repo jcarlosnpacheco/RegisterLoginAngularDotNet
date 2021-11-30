@@ -1,20 +1,36 @@
 using Business.Commands.Generics;
-using Business.Models;
 using MediatR;
 
 namespace RegisterLoginAPI.Business.Commands
 {
     public class CreateRegisterLoginCommand : IRequest<GenericCommandResult>
     {
-        public int Id { get; set; }
+        public int Id { get; protected set; }
 
-        public string LoginName { get; set; }
+        public string LoginName { get; protected set; }
 
-        public string Password { get; set; }
+        public string Password { get; protected set; }
 
-        public string Observation { get; set; }
+        public string Observation { get; protected set; }
 
-        //TODO - verificar como ficará esta propriedade
-        public LoginTypeModel LoginType { get; set; }
+        public int LoginTypeId { get; protected set; }
+
+        #region Methods
+
+        public CreateRegisterLoginCommand(
+            int id,
+            string loginName,
+            string password,
+            string observation,
+            int loginTypeId)
+        {
+            Id = id;
+            LoginName = loginName;
+            Password = password;
+            Observation = observation;
+            LoginTypeId = loginTypeId;
+        }
+
+        #endregion Methods
     }
 }

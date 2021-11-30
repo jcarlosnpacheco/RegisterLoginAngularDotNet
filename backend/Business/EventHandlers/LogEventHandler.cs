@@ -1,5 +1,6 @@
 using MediatR;
 using RegisterLoginAPI.Business.Notifications;
+using RegisterLoginAPI.Business.Notifications.RegisterLogin;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

@@ -2,7 +2,7 @@ using Business.Models;
 using MediatR;
 using System;
 
-namespace RegisterLoginAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Notifications.RegisterLogin
 {
     public class RegisterLoginCreatedNotification : INotification
     {
@@ -10,10 +10,8 @@ namespace RegisterLoginAPI.Business.Notifications
 
         public string LoginName { get; set; }
 
-        public string Password { get; set; }
-
         public string Observation { get; set; }
 
-        public LoginTypeModel LoginType { get; set; }
+        public int LoginTypeId { get; set; }
     }
 }

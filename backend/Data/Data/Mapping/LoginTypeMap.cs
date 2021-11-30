@@ -1,12 +1,13 @@
 ﻿using Business.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using RegisterLoginAPI.Business.Entity;
 
 namespace Infra.Data.Mapping
 {
-    public class LoginTypeMap : IEntityTypeConfiguration<LoginTypeModel>
+    public class LoginTypeMap : IEntityTypeConfiguration<LoginType>
     {
-        public void Configure(EntityTypeBuilder<LoginTypeModel> builder)
+        public void Configure(EntityTypeBuilder<LoginType> builder)
         {
             //table name
             builder.ToTable("login_type");
@@ -19,6 +20,7 @@ namespace Infra.Data.Mapping
 
             builder.Property(s => s.Id)
                 .HasColumnName("id")
+                .IsRequired()
                 .ValueGeneratedOnAdd();
 
             builder.Property(s => s.Name)

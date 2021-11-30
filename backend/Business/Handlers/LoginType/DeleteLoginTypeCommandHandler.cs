@@ -1,16 +1,17 @@
+using Business.Commands.Generics;
+using Business.Models;
 using MediatR;
 using RegisterLoginAPI.Business.Commands;
-using RegisterLoginAPI.Business.Models;
-using RegisterLoginAPI.Business.Notifications;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
+using RegisterLoginAPI.Business.Notifications;
+using RegisterLoginAPI.Business.Notifications.RegisterLogin;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Business.Models;
 
 namespace RegisterLoginAPI.Business.Handlers
 {
-    public class DeleteLoginTypeCommandHandler : IRequestHandler<DeleteLoginTypeCommand, string>
+    public class DeleteLoginTypeCommandHandler : IRequestHandler<DeleteLoginTypeCommand, GenericCommandResult>
     {
         private readonly IMediator _mediator;
         private readonly IGenericRepository<LoginTypeModel> _repository;
@@ -21,23 +22,24 @@ namespace RegisterLoginAPI.Business.Handlers
             _repository = repository;
         }
 
-        public async Task<string> Handle(DeleteLoginTypeCommand request, CancellationToken cancellationToken)
+        public async Task<GenericCommandResult> Handle(DeleteLoginTypeCommand request, CancellationToken cancellationToken)
         {
+            //TODO - create flunt validation
+
             try
             {
                 _repository.Delete(request.Id);
 
-                //TODO: Create notification to DeleteLoginTypeCommandHandler
-                await _mediator.Publish(new RegisterLoginDeletedNotification { Id = request.Id, IsDeleted = true });
+                await _mediator.Publish(new LoginTypeDeletedNotification { Id = request.Id, IsDeleted = true });
 
-                return await Task.FromResult("Login Type successfully deleted");
+                return new GenericCommandResult(true, "Successfully deleted", request);
             }
             catch (Exception ex)
             {
-                //TODO: Create notification to DeleteLoginTypeCommandHandler
-                await _mediator.Publish(new RegisterLoginDeletedNotification { Id = request.Id, IsDeleted = false });
+                await _mediator.Publish(new LoginTypeDeletedNotification { Id = request.Id, IsDeleted = false });
                 await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
-                return await Task.FromResult("Fail on delete Login Type");
+
+                return new GenericCommandResult(false, "Fail on delete", request);
             }
         }
     }
