@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RegisterLoginAPI.Business.Models;
 
-namespace Data.Data.Mapping
+namespace Infra.Data.Mapping
 {
     public class RegisterLoginMap : IEntityTypeConfiguration<RegisterLoginModel>
     {
@@ -40,7 +40,7 @@ namespace Data.Data.Mapping
             builder.HasOne(r => r.LoginType)
                 .WithOne()
                 .HasForeignKey("login_type")
-                .HasConstraintName("FK_Login_Type");              
+                .HasConstraintName("FK_Login_Type");
 
             #endregion relationship
         }

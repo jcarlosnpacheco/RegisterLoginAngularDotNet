@@ -1,4 +1,5 @@
 1 - Adjust queries Login Type - OK
-2 - Adjust Handlers and Command's - Pending
-3 - Create controller to Login Type - Pending
-4 - Update-database migration
+2 - Adjust Handlers and Command's - Pending (look todo's)
+3 - Create controller to Login Type - OK
+4 - Update-database migration - Pending
+5 - Implement flund validation - Pending

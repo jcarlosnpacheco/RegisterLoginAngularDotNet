@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Data.Data.Mapping
+namespace Infra.Data.Mapping
 {
     public class LoginTypeMap : IEntityTypeConfiguration<LoginTypeModel>
     {

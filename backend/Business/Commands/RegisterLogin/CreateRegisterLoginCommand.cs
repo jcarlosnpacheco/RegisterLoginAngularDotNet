@@ -1,10 +1,9 @@
 using Business.Models;
 using MediatR;
-using System;
 
-namespace RegisterLoginAPI.Business.Notifications
+namespace RegisterLoginAPI.Business.Commands
 {
-    public class RegisterLoginCreatedNotification : INotification
+    public class CreateRegisterLoginCommand : IRequest<string>
     {
         public int Id { get; set; }
 

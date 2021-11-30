@@ -8,28 +8,28 @@ namespace RegisterLoginAPI.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RegisterLoginController : ControllerBase
+    public class LoginTypeControllerController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        private readonly IRegisterLoginQueries _registerLoginQueries;
+        private readonly ILoginTypeQueries _loginTypeQueries;
 
-        public RegisterLoginController(IMediator mediator, IRegisterLoginQueries registerLoginQueries)
+        public LoginTypeControllerController(IMediator mediator, ILoginTypeQueries loginTypeQueries)
         {
             _mediator = mediator;
-            _registerLoginQueries = registerLoginQueries;
+            _loginTypeQueries = loginTypeQueries;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _registerLoginQueries.GetAllAsync());
+            return Ok(await _loginTypeQueries.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _registerLoginQueries.GetByIdAsync(id));
+            return Ok(await _loginTypeQueries.GetByIdAsync(id));
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateRegisterLoginCommand command)
+        public async Task<IActionResult> Put(UpdateLoginTypeCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
@@ -49,7 +49,7 @@ namespace RegisterLoginAPI.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var obj = new DeleteRegisterLoginCommand { Id = id };
+            var obj = new DeleteLoginTypeCommand { Id = id };
             var result = await _mediator.Send(obj);
             return Ok(result);
         }

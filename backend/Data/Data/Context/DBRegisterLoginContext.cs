@@ -1,5 +1,5 @@
 ﻿using Business.Models;
-using Data.Data.Mapping;
+using Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 using RegisterLoginAPI.Business.Models;
 

@@ -1,14 +1,20 @@
+using Business.Models;
 using MediatR;
-using System;
 
 namespace RegisterLoginAPI.Business.Notifications
 {
     public class RegisterLoginUpdatedNotification : INotification
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public double Value { get; set; }
+
+        public string LoginName { get; set; }
+
+        public string Password { get; set; }
+
+        public string Observation { get; set; }
+
+        public LoginTypeModel LoginType { get; set; }
+
         public bool IsEdited { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace RegisterLoginAPI.Business.EventHandlers
         {
             return Task.Run(() =>
             {
-                Console.WriteLine($"CREATED: '{notification.Id} - {notification.Description} - {notification.Date} - {notification.Value}'");
+                Console.WriteLine($"CREATED: '{notification.Id} - {notification.LoginName} - {notification.Observation} '");
             });
         }
 
@@ -24,7 +24,7 @@ namespace RegisterLoginAPI.Business.EventHandlers
         {
             return Task.Run(() =>
             {
-                Console.WriteLine($"EDITED: '{notification.Id} - {notification.Description} - {notification.Date} - {notification.Value} - {notification.IsEdited}'");
+                Console.WriteLine($"EDITED: '{notification.Id} - {notification.LoginName} - {notification.Observation} - {notification.IsEdited}'");
             });
         }
 

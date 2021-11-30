@@ -9,6 +9,6 @@ namespace RegisterLoginAPI.Business.Interfaces.Queries
     {
         Task<ICollection<LoginTypeModel>> GetAllAsync();
 
-        Task<LoginTypeModel> GetByIdAsync(int idRegisterLogin);
+        Task<LoginTypeModel> GetByIdAsync(int idLoginType);
     }
 }
