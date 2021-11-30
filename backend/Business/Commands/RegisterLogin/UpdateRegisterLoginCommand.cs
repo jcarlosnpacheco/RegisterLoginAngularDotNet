@@ -1,9 +1,10 @@
+using Business.Commands.Generics;
 using Business.Models;
 using MediatR;
 
 namespace RegisterLoginAPI.Business.Commands
 {
-    public class UpdateRegisterLoginCommand : IRequest<string>
+    public class UpdateRegisterLoginCommand : IRequest<GenericCommandResult>
     {
         public int Id { get; set; }
 

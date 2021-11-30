@@ -21,7 +21,7 @@ namespace RegisterLoginAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("ServiceOrderAPI.Business.Models.ServiceOrderModel", b =>
+            modelBuilder.Entity("RegisterAPI.Business.Models.ServiceOrderModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

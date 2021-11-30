@@ -1,9 +1,10 @@
+using Business.Commands.Generics;
 using Business.Models;
 using MediatR;
 
 namespace RegisterLoginAPI.Business.Commands
 {
-    public class CreateRegisterLoginCommand : IRequest<string>
+    public class CreateRegisterLoginCommand : IRequest<GenericCommandResult>
     {
         public int Id { get; set; }
 
@@ -13,6 +14,7 @@ namespace RegisterLoginAPI.Business.Commands
 
         public string Observation { get; set; }
 
+        //TODO - verificar como ficará esta propriedade
         public LoginTypeModel LoginType { get; set; }
     }
 }

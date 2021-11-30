@@ -8,39 +8,39 @@ namespace RegisterLoginAPI.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class LoginTypeControllerController : ControllerBase
+    public class RegisterLoginController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        private readonly ILoginTypeQueries _loginTypeQueries;
+        private readonly IRegisterLoginQueries _registerLoginQueries;
 
-        public LoginTypeControllerController(IMediator mediator, ILoginTypeQueries loginTypeQueries)
+        public RegisterLoginController(IMediator mediator, IRegisterLoginQueries registerLoginQueries)
         {
             _mediator = mediator;
-            _loginTypeQueries = loginTypeQueries;
+            _registerLoginQueries = registerLoginQueries;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _loginTypeQueries.GetAllAsync());
+            return Ok(await _registerLoginQueries.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _loginTypeQueries.GetByIdAsync(id));
+            return Ok(await _registerLoginQueries.GetByIdAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateLoginTypeCommand command)
+        public async Task<IActionResult> Post([FromBody] CreateRegisterLoginCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateLoginTypeCommand command)
+        public async Task<IActionResult> Put([FromBody] CreateRegisterLoginCommand command)
         {
             var response = await _mediator.Send(command);
             return Ok(response);
@@ -49,7 +49,7 @@ namespace RegisterLoginAPI.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var obj = new DeleteLoginTypeCommand { Id = id };
+            var obj = new DeleteRegisterLoginCommand { Id = id };
             var result = await _mediator.Send(obj);
             return Ok(result);
         }

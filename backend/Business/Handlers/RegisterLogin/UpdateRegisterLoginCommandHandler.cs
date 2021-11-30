@@ -6,10 +6,11 @@ using RegisterLoginAPI.Business.Interfaces.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Commands.Generics;
 
 namespace RegisterLoginAPI.Business.Handlers
 {
-    public class UpdateRegisterLoginCommandHandler : IRequestHandler<UpdateRegisterLoginCommand, string>
+    public class UpdateRegisterLoginCommandHandler : IRequestHandler<UpdateRegisterLoginCommand, GenericCommandResult>
     {
         private readonly IMediator _mediator;
         private readonly IGenericRepository<RegisterLoginModel> _repository;
@@ -20,7 +21,7 @@ namespace RegisterLoginAPI.Business.Handlers
             _repository = repository;
         }
 
-        public async Task<string> Handle(UpdateRegisterLoginCommand request, CancellationToken cancellationToken)
+        public async Task<GenericCommandResult> Handle(UpdateRegisterLoginCommand request, CancellationToken cancellationToken)
         {
             var registerLogin = new RegisterLoginModel
             {
@@ -44,7 +45,7 @@ namespace RegisterLoginAPI.Business.Handlers
                     IsEdited = true
                 });
 
-                return await Task.FromResult("Register Login successfully modified");
+                return new GenericCommandResult(true, "Register Login successfully modified", registerLogin);
             }
             catch (Exception ex)
             {
@@ -58,7 +59,8 @@ namespace RegisterLoginAPI.Business.Handlers
                     IsEdited = false
                 });
                 await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
-                return await Task.FromResult("Fail on edit Register Login");
+
+                return new GenericCommandResult(false, "Fail on edit Register Login", registerLogin);
             }
         }
     }

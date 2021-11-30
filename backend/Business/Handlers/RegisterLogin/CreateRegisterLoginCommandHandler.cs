@@ -1,3 +1,4 @@
+using Business.Commands.Generics;
 using MediatR;
 using RegisterLoginAPI.Business.Commands;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RegisterLoginAPI.Business.Handlers
 {
-    public class CreateRegisterLoginCommandHandler : IRequestHandler<CreateRegisterLoginCommand, string>
+    public class CreateRegisterLoginCommandHandler : IRequestHandler<CreateRegisterLoginCommand, GenericCommandResult>
     {
         private readonly IMediator _mediator;
         private readonly IGenericRepository<RegisterLoginModel> _repository;
@@ -20,8 +21,9 @@ namespace RegisterLoginAPI.Business.Handlers
             _repository = repository;
         }
 
-        public async Task<string> Handle(CreateRegisterLoginCommand request, CancellationToken cancellationToken)
+        public async Task<GenericCommandResult> Handle(CreateRegisterLoginCommand request, CancellationToken cancellationToken)
         {
+            //TODO - criar um entity ao invés de model
             var registerLogin = new RegisterLoginModel
             {
                 LoginName = request.LoginName,
@@ -42,7 +44,7 @@ namespace RegisterLoginAPI.Business.Handlers
                     LoginType = request.LoginType
                 });
 
-                return await Task.FromResult("Register Login successfully created");
+                return new GenericCommandResult(true, "Register Login successfully created", registerLogin);
             }
             catch (Exception ex)
             {
@@ -55,7 +57,8 @@ namespace RegisterLoginAPI.Business.Handlers
                     LoginType = request.LoginType
                 });
                 await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
-                return await Task.FromResult("Fail on create Register Login");
+
+                return new GenericCommandResult(false, "Fail on create Register Login", null);
             }
         }
     }
