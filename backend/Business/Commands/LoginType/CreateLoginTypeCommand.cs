@@ -1,9 +1,11 @@
 using Business.Commands.Generics;
+using Business.Commands.LoginType.Contracts;
+using Flunt.Notifications;
 using MediatR;
 
 namespace RegisterLoginAPI.Business.Commands
 {
-    public class CreateLoginTypeCommand : IRequest<GenericCommandResult>
+    public class CreateLoginTypeCommand : Notifiable<Notification>, IRequest<GenericCommandResult>
     {
         public int Id { get; protected set; }
 
@@ -15,6 +17,11 @@ namespace RegisterLoginAPI.Business.Commands
         {
             Id = id;
             Name = name;
+        }
+
+        public void Validate()
+        {
+            AddNotifications(new CreateLoginTypeContract(this));
         }
 
         #endregion Methods

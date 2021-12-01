@@ -24,7 +24,16 @@ namespace RegisterLoginAPI.Business.Handlers
 
         public async Task<GenericCommandResult> Handle(DeleteLoginTypeCommand request, CancellationToken cancellationToken)
         {
-            //TODO - create flunt validation
+            // Fail Fast Validate
+            request.Validate();
+
+            if (!request.IsValid)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Ops! Validate's fail!",
+                    request.Notifications);
+            }
 
             try
             {

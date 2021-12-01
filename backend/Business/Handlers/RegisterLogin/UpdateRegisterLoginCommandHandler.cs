@@ -27,7 +27,16 @@ namespace RegisterLoginAPI.Business.Handlers
 
         public async Task<GenericCommandResult> Handle(UpdateRegisterLoginCommand request, CancellationToken cancellationToken)
         {
-            //TODO - create flunt validation
+            // Fail Fast Validate
+            request.Validate();
+
+            if (!request.IsValid)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Ops! Validate's fail!",
+                    request.Notifications);
+            }
 
             var registerLogin = await _repository.Get(request.Id);
 

@@ -30,7 +30,16 @@ namespace RegisterLoginAPI.Business.Handlers
 
         public async Task<GenericCommandResult> Handle(CreateRegisterLoginCommand request, CancellationToken cancellationToken)
         {
-            // TODO - create flund validation
+            // Fail Fast Validate
+            request.Validate();
+
+            if (!request.IsValid)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Ops! Validate's fail!",
+                    request.Notifications);
+            }
 
             var loginType = await _repositoryLoginType.Get(request.LoginTypeId);
 

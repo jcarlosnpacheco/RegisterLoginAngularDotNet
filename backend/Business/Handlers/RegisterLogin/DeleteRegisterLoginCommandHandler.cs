@@ -24,7 +24,16 @@ namespace RegisterLoginAPI.Business.Handlers
 
         public async Task<GenericCommandResult> Handle(DeleteRegisterLoginCommand request, CancellationToken cancellationToken)
         {
-            //TODO - create flunt validation
+            // Fail Fast Validate
+            request.Validate();
+
+            if (!request.IsValid)
+            {
+                return new GenericCommandResult(
+                    false,
+                    "Ops! Validate's fail!",
+                    request.Notifications);
+            }
 
             try
             {
@@ -32,6 +41,7 @@ namespace RegisterLoginAPI.Business.Handlers
 
                 await _mediator.Publish(new RegisterLoginDeletedNotification
                 { Id = request.Id, IsDeleted = true }, CancellationToken.None);
+
                 return new GenericCommandResult(true, "Successfully deleted", request);
             }
             catch (Exception ex)

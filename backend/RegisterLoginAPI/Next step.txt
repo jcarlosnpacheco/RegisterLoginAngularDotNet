@@ -1,5 +1,6 @@
 1 - Adjust queries Login Type - OK
-2 - Adjust Handlers and Command's - Pending (look todo's)
+2 - Adjust Handlers and Command's - OK
 3 - Create controller to Login Type - OK
 4 - Update-database migration - OK
 5 - Create test class library - Pending
+6 - Implement front-end

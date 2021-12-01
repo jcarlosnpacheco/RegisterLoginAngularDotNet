@@ -31,8 +31,7 @@ namespace Infra.Data.Mapping
                 .IsRequired();
 
             builder.Property(r => r.Observation)
-                .HasColumnName("observation")
-                .IsRequired();
+                .HasColumnName("observation");
 
             builder.Property(r => r.LoginTypeId)
                .HasColumnName("login_type_id")
