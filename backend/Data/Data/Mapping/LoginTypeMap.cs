@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RegisterLoginAPI.Business.Entity;
 
@@ -13,17 +12,17 @@ namespace Infra.Data.Mapping
             builder.ToTable("login_type");
 
             //primary key
-            builder.HasKey(x => x.Id)
+            builder.HasKey(l => l.Id)
                 .HasName("PK_Login_Type");
 
             #region properties
 
-            builder.Property(s => s.Id)
+            builder.Property(l => l.Id)
                 .HasColumnName("id")
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
-            builder.Property(s => s.Name)
+            builder.Property(l => l.Name)
                 .HasColumnName("name")
                 .IsRequired()
                 .HasMaxLength(50);

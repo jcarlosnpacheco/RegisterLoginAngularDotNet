@@ -34,16 +34,11 @@ namespace Infra.Data.Mapping
                 .HasColumnName("observation")
                 .IsRequired();
 
+            builder.Property(r => r.LoginTypeId)
+               .HasColumnName("login_type_id")
+               .IsRequired();
+
             #endregion properties
-
-            #region relationship
-
-            builder.HasOne(r => r.LoginType)
-                .WithOne()
-                .HasForeignKey<LoginType>(r => r.Id)
-                .HasConstraintName("FK_Login_Type");
-
-            #endregion relationship
         }
     }
 }

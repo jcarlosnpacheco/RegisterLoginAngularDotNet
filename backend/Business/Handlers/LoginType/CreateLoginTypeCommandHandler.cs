@@ -40,7 +40,7 @@ namespace RegisterLoginAPI.Business.Handlers
                 {
                     Id = request.Id,
                     Name = request.Name
-                });
+                }, CancellationToken.None);
 
                 return new GenericCommandResult(true, "Successfully created", loginType);
             }
@@ -50,9 +50,11 @@ namespace RegisterLoginAPI.Business.Handlers
                 {
                     Id = request.Id,
                     Name = request.Name
-                });
+                }, CancellationToken.None);
 
-                await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
+                await _mediator.Publish(new ErrorNotification
+                { Exception = ex.Message, StackError = ex.StackTrace },
+                CancellationToken.None);
 
                 return new GenericCommandResult(false, "Fail on create ", loginType);
             }

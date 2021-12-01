@@ -30,13 +30,18 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 _repository.Delete(request.Id);
 
-                await _mediator.Publish(new RegisterLoginDeletedNotification { Id = request.Id, IsDeleted = true });
+                await _mediator.Publish(new RegisterLoginDeletedNotification
+                { Id = request.Id, IsDeleted = true }, CancellationToken.None);
                 return new GenericCommandResult(true, "Successfully deleted", request);
             }
             catch (Exception ex)
             {
-                await _mediator.Publish(new RegisterLoginDeletedNotification { Id = request.Id, IsDeleted = false });
-                await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
+                await _mediator.Publish(new RegisterLoginDeletedNotification
+                { Id = request.Id, IsDeleted = false }, CancellationToken.None);
+
+                await _mediator.Publish(new ErrorNotification
+                { Exception = ex.Message, StackError = ex.StackTrace }, CancellationToken.None);
+
                 return new GenericCommandResult(false, "Fail on delete", request);
             }
         }

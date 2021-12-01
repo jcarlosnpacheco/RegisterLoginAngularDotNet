@@ -1,4 +1,6 @@
-﻿namespace RegisterLoginAPI.Business.Entity
+﻿using System.Collections.Generic;
+
+namespace RegisterLoginAPI.Business.Entity
 {
     public class LoginType
     {

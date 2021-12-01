@@ -2,7 +2,6 @@ using Business.Commands.Generics;
 using MediatR;
 using RegisterLoginAPI.Business.Commands;
 using RegisterLoginAPI.Business.Entity;
-using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
 using RegisterLoginAPI.Business.Notifications;
 using RegisterLoginAPI.Business.Notifications.RegisterLogin;
@@ -16,23 +15,21 @@ namespace RegisterLoginAPI.Business.Handlers
     {
         private readonly IMediator _mediator;
         private readonly IGenericRepository<LoginType> _repository;
-        private readonly ILoginTypeQueries _loginTypeQueries;
 
         public UpdateLoginTypeCommandHandler(
             IMediator mediator,
-            IGenericRepository<LoginType> repository,
-            ILoginTypeQueries loginTypeQueries)
+            IGenericRepository<LoginType> repository
+            )
         {
             _mediator = mediator;
             _repository = repository;
-            _loginTypeQueries = loginTypeQueries;
         }
 
         public async Task<GenericCommandResult> Handle(UpdateLoginTypeCommand request, CancellationToken cancellationToken)
         {
             //TODO - create flunt validation
 
-            var loginType = await _loginTypeQueries.GetByIdAsync(request.Id);
+            var loginType = await _repository.Get(request.Id);
 
             if (loginType is not null)
             {
@@ -47,7 +44,7 @@ namespace RegisterLoginAPI.Business.Handlers
                         Id = request.Id,
                         Name = request.Name,
                         IsEdited = true
-                    });
+                    }, CancellationToken.None);
 
                     return new GenericCommandResult(true, "Successfully updated", loginType);
                 }
@@ -58,9 +55,10 @@ namespace RegisterLoginAPI.Business.Handlers
                         Id = request.Id,
                         Name = request.Name,
                         IsEdited = false
-                    });
+                    }, CancellationToken.None);
 
-                    await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
+                    await _mediator.Publish(new ErrorNotification
+                    { Exception = ex.Message, StackError = ex.StackTrace }, CancellationToken.None);
 
                     return new GenericCommandResult(true, "Fail on update", loginType);
                 }

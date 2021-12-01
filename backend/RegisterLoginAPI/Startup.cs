@@ -19,11 +19,11 @@ namespace RegisterLoginAPI.API
 {
     public class Startup
     {
-        public IConfiguration _configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -34,7 +34,7 @@ namespace RegisterLoginAPI.API
              * Scoped objects are the same within a request, but different across different requests.
              * Singleton objects are the same for every object and every request.*/
 
-            services.AddSingleton(_configuration);
+            services.AddSingleton(Configuration);
             services.AddControllers();
 
             #region MediatR
@@ -77,7 +77,7 @@ namespace RegisterLoginAPI.API
 
             services.AddEntityFrameworkNpgsql()
              .AddDbContext<DBRegisterLoginContext>(
-                options => options.UseNpgsql(_configuration.GetConnectionString("RegisterLoginDB"),
+                options => options.UseNpgsql(Configuration.GetConnectionString("RegisterLoginDB"),
                                             b => b.MigrationsAssembly("RegisterLoginAPI"))
              );
 
@@ -86,9 +86,15 @@ namespace RegisterLoginAPI.API
             #region Dapper
 
             services.AddSingleton<DapperContext>();
-            services.AddTransient<IRegisterLoginQueries, RegisterLoginQueries>();
 
             #endregion Dapper
+
+            #region Queries
+
+            services.AddTransient<IRegisterLoginQueries, RegisterLoginQueries>();
+            services.AddTransient<ILoginTypeQueries, LoginTypeQueries>();
+
+            #endregion Queries
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

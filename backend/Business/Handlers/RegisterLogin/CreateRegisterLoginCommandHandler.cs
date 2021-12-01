@@ -15,24 +15,24 @@ namespace RegisterLoginAPI.Business.Handlers
     public class CreateRegisterLoginCommandHandler : IRequestHandler<CreateRegisterLoginCommand, GenericCommandResult>
     {
         private readonly IMediator _mediator;
-        private readonly IGenericRepository<RegisterLogin> _repository;
-        private readonly ILoginTypeQueries _loginType;
+        private readonly IGenericRepository<RegisterLogin> _repositoryRegisterLogin;
+        private readonly IGenericRepository<LoginType> _repositoryLoginType;
 
         public CreateRegisterLoginCommandHandler(
             IMediator mediator,
-            IGenericRepository<RegisterLogin> repository,
-            ILoginTypeQueries loginType)
+            IGenericRepository<RegisterLogin> repositoryRegisterLogin,
+            IGenericRepository<LoginType> repositoryLoginType)
         {
             _mediator = mediator;
-            _repository = repository;
-            _loginType = loginType;
+            _repositoryRegisterLogin = repositoryRegisterLogin;
+            _repositoryLoginType = repositoryLoginType;
         }
 
         public async Task<GenericCommandResult> Handle(CreateRegisterLoginCommand request, CancellationToken cancellationToken)
         {
             // TODO - create flund validation
 
-            var loginType = await _loginType.GetByIdAsync(request.LoginTypeId);
+            var loginType = await _repositoryLoginType.Get(request.LoginTypeId);
 
             if (loginType is not null)
             {
@@ -41,19 +41,19 @@ namespace RegisterLoginAPI.Business.Handlers
                     LoginName = request.LoginName,
                     Password = request.Password,
                     Observation = request.Observation,
-                    LoginType = loginType
+                    LoginTypeId = loginType.Id
                 };
 
                 try
                 {
-                    await _repository.Create(registerLogin);
+                    await _repositoryRegisterLogin.Create(registerLogin);
 
                     await _mediator.Publish(new RegisterLoginCreatedNotification
                     {
                         LoginName = request.LoginName,
                         Observation = request.Observation,
                         LoginTypeId = request.LoginTypeId
-                    });
+                    }, CancellationToken.None);
 
                     return new GenericCommandResult(true, "Successfully created", registerLogin);
                 }
@@ -64,9 +64,10 @@ namespace RegisterLoginAPI.Business.Handlers
                         LoginName = request.LoginName,
                         Observation = request.Observation,
                         LoginTypeId = request.LoginTypeId
-                    });
+                    }, CancellationToken.None);
 
-                    await _mediator.Publish(new ErrorNotification { Exception = ex.Message, StackError = ex.StackTrace });
+                    await _mediator.Publish(new ErrorNotification
+                    { Exception = ex.Message, StackError = ex.StackTrace }, CancellationToken.None);
 
                     return new GenericCommandResult(false, "Fail on create", null);
                 }

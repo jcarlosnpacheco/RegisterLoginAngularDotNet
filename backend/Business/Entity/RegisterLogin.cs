@@ -10,6 +10,6 @@ namespace RegisterLoginAPI.Business.Entity
 
         public string Observation { get; set; }
 
-        public LoginType LoginType { get; set; }
+        public int LoginTypeId { get; set; }
     }
 }

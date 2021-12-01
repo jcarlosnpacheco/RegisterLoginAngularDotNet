@@ -1,6 +1,7 @@
 using RegisterLoginAPI.Business.Entity;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
 using RegisterLoginAPI.Infra.Data.Context;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,6 +39,16 @@ namespace RegisterLoginAPI.Infra.Data.Repositories
                 _context.RegisterLogin.Remove(entity);
                 _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<ICollection<RegisterLogin>> GetAll()
+        {
+            return await Task.Run(() => _context.RegisterLogin.ToList());
+        }
+
+        public async Task<RegisterLogin> Get(int id)
+        {
+            return await Task.Run(() => _context.RegisterLogin.FirstOrDefault(r => r.Id == id));
         }
     }
 }

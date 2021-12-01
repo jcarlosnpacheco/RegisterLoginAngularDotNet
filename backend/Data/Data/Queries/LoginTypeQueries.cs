@@ -1,6 +1,5 @@
 ﻿using Business.Models;
 using Dapper;
-using RegisterLoginAPI.Business.Entity;
 using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
 using System.Collections.Generic;
@@ -16,18 +15,18 @@ namespace RegisterLoginAPI.Infra.Data.Queries
 
         public LoginTypeQueries(DapperContext dapperContext) => _dapperContext = dapperContext;
 
-        public async Task<ICollection<LoginType>> GetAllAsync()
+        public async Task<ICollection<LoginTypeModel>> GetAllAsync()
         {
             var query = new StringBuilder($@"SELECT id AS ""Id"",
                                              name AS ""Name""
                                              FROM login_type");
 
             using var connection = _dapperContext.CreateConnection();
-            var registers = await connection.QueryAsync<LoginType>(query.ToString());
+            var registers = await connection.QueryAsync<LoginTypeModel>(query.ToString());
             return registers.ToList();
         }
 
-        public async Task<LoginType> GetByIdAsync(int idLoginType)
+        public async Task<LoginTypeModel> GetByIdAsync(int idLoginType)
         {
             var query = new StringBuilder($@"SELECT id AS ""Id"",
                                                     name AS ""Name""
@@ -35,7 +34,7 @@ namespace RegisterLoginAPI.Infra.Data.Queries
                                              WHERE id = { idLoginType }");
 
             using var connection = _dapperContext.CreateConnection();
-            return await connection.QueryFirstOrDefaultAsync<LoginType>(query.ToString());
+            return await connection.QueryFirstOrDefaultAsync<LoginTypeModel>(query.ToString());
         }
     }
 }
