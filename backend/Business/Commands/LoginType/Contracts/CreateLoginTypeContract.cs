@@ -8,8 +8,10 @@ namespace Business.Commands.LoginType.Contracts
         public CreateLoginTypeContract(CreateLoginTypeCommand command)
         {
             Requires()
-                .IsNotNull(command.Name, "Name", "Name required")
-                .IsLowerOrEqualsThan(50, command.Name.Length, "Name", "Name must be less or equals 50 characters");
+                .IsNotNull(command.Name, "Name", "Name required");
+
+            if (command.Name is not null)
+                Requires().IsLowerOrEqualsThan(command.Name.Length, 50, "Name", "Name must be less or equals 50 characters");
         }
     }
 }

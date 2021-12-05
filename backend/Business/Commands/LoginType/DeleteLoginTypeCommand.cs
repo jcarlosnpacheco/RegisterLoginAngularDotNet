@@ -7,7 +7,7 @@ namespace RegisterLoginAPI.Business.Commands
 {
     public class DeleteLoginTypeCommand : Notifiable<Notification>, IRequest<GenericCommandResult>
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
         #region Methods
 

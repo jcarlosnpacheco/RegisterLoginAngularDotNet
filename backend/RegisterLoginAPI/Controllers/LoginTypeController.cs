@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RegisterLoginAPI.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LoginTypeControllerController : ControllerBase
     {
         private readonly IMediator _mediator;

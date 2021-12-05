@@ -2,5 +2,10 @@
 2 - Adjust Handlers and Command's - OK
 3 - Create controller to Login Type - OK
 4 - Update-database migration - OK
-5 - Create test class library - Pending
-6 - Implement front-end
+5 - Create test class library - OK
+	Create unit test - OK
+	Create integration test of login type - OK
+	Create integration test of register login - Pending
+6 - Implement criptography - Pending
+7 - Implement auth token (auth) - Pending
+8 - Implement front-end - Pending

@@ -9,7 +9,7 @@ namespace Business.Commands.RegisterLogin.Contracts
         {
             Requires()
                 .IsNotNull(command.Id, "Id", "Id required")
-                .IsTrue(command.Id > 0, "Id", "Id must be greater 0");
+                .IsGreaterThan(command.Id, 0, "Id", "Id must be greater 0");
         }
     }
 }

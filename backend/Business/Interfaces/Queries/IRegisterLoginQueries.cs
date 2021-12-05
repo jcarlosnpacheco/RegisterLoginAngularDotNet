@@ -1,5 +1,4 @@
-﻿using RegisterLoginAPI.Business.Entity;
-using RegisterLoginAPI.Business.Models;
+﻿using RegisterLoginAPI.Business.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

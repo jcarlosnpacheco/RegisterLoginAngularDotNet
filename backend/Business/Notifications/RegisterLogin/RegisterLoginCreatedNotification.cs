@@ -1,6 +1,4 @@
-using Business.Models;
 using MediatR;
-using System;
 
 namespace RegisterLoginAPI.Business.Notifications.RegisterLogin
 {

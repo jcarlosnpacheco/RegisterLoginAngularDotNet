@@ -2,7 +2,6 @@ using Business.Commands.Generics;
 using MediatR;
 using RegisterLoginAPI.Business.Commands;
 using RegisterLoginAPI.Business.Entity;
-using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
 using RegisterLoginAPI.Business.Notifications;
 using RegisterLoginAPI.Business.Notifications.RegisterLogin;

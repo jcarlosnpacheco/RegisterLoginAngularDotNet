@@ -10,8 +10,10 @@ namespace Business.Commands.RegisterLogin.Contracts
             Requires()
                 .IsNotNull(command.LoginName, "LoginName", "LoginName required")
                 .IsNotNull(command.Password, "Password", "Password required")
-                .IsNotNull(command.LoginTypeId, "LoginTypeId", "LoginTypeId required")
-                .IsLowerOrEqualsThan(command.LoginName, 50, "LoginName", "LoginName must be until 50 characters");
+                .IsTrue(command.LoginTypeId > 0, "LoginTypeId", "LoginTypeId required");
+
+            if (command.LoginName is not null)
+                Requires().IsLowerOrEqualsThan(command.LoginName, 50, "LoginName", "LoginName must be until 50 characters");
         }
     }
 }

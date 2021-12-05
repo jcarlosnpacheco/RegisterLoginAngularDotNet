@@ -7,15 +7,15 @@ namespace RegisterLoginAPI.Business.Commands
 {
     public class UpdateRegisterLoginCommand : Notifiable<Notification>, IRequest<GenericCommandResult>
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
-        public string LoginName { get; protected set; }
+        public string LoginName { get; set; }
 
-        public string Password { get; protected set; }
+        public string Password { get; set; }
 
-        public string Observation { get; protected set; }
+        public string Observation { get; set; }
 
-        public int LoginTypeId { get; protected set; }
+        public int LoginTypeId { get; set; }
 
         #region Methods
 

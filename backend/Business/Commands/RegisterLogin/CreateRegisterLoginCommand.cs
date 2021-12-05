@@ -7,26 +7,24 @@ namespace RegisterLoginAPI.Business.Commands
 {
     public class CreateRegisterLoginCommand : Notifiable<Notification>, IRequest<GenericCommandResult>
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
-        public string LoginName { get; protected set; }
+        public string LoginName { get; set; }
 
-        public string Password { get; protected set; }
+        public string Password { get; set; }
 
-        public string Observation { get; protected set; }
+        public string Observation { get; set; }
 
-        public int LoginTypeId { get; protected set; }
+        public int LoginTypeId { get; set; }
 
         #region Methods
 
         public CreateRegisterLoginCommand(
-            int id,
             string loginName,
             string password,
             string observation,
             int loginTypeId)
         {
-            Id = id;
             LoginName = loginName;
             Password = password;
             Observation = observation;

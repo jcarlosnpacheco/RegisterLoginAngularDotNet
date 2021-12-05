@@ -7,15 +7,14 @@ namespace RegisterLoginAPI.Business.Commands
 {
     public class CreateLoginTypeCommand : Notifiable<Notification>, IRequest<GenericCommandResult>
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
-        public string Name { get; protected set; }
+        public string Name { get; set; }
 
         #region Methods
 
-        public CreateLoginTypeCommand(int id, string name)
+        public CreateLoginTypeCommand(string name)
         {
-            Id = id;
             Name = name;
         }
 
