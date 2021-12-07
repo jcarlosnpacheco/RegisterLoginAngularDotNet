@@ -8,13 +8,13 @@ namespace RegisterLoginAPI.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LoginTypeControllerController : ControllerBase
+    public class LoginTypeController : ControllerBase
     {
         private readonly IMediator _mediator;
 
         private readonly ILoginTypeQueries _loginTypeQueries;
 
-        public LoginTypeControllerController(IMediator mediator, ILoginTypeQueries loginTypeQueries)
+        public LoginTypeController(IMediator mediator, ILoginTypeQueries loginTypeQueries)
         {
             _mediator = mediator;
             _loginTypeQueries = loginTypeQueries;

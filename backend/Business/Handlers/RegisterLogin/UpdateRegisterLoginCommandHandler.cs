@@ -44,6 +44,11 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 try
                 {
+                    registerLogin.LoginName = request.LoginName;
+                    registerLogin.Password = request.Password;
+                    registerLogin.LoginTypeId = request.LoginTypeId;
+                    registerLogin.Observation = request.Observation;
+
                     await _repository.Update(registerLogin);
 
                     await _mediator.Publish(new RegisterLoginUpdatedNotification

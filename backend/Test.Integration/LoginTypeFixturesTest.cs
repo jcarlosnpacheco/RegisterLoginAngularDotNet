@@ -16,14 +16,14 @@ namespace Test.Integration
     public class LoginTypeFixturesTest
     {
         private readonly IntegrationTestFixture<StartupApiTest> _integrationTestFixture;
-        private const string API_URL_LOGIN_TYPE = "/api/LoginTypeController";
+        private const string API_URL_LOGIN_TYPE = "/api/LoginType";
 
         public LoginTypeFixturesTest(IntegrationTestFixture<StartupApiTest> integrationTestFixture)
         {
             _integrationTestFixture = integrationTestFixture;
         }
 
-        [Fact, TestPriority(1)]
+        [Fact(DisplayName = "Get Login's Type"), TestPriority(2)]
         public async Task Get_All_Login_Type()
         {
             // Arrange
@@ -36,8 +36,8 @@ namespace Test.Integration
             Assert.True(request.IsSuccessStatusCode);
         }
 
-        [Fact, TestPriority(2)]
-        public async Task Post_login_type()
+        [Fact(DisplayName = "Post Login's Type"), TestPriority(1)]
+        public async Task Post_Login_Type()
         {
             // Arrange
             var data = new
@@ -64,8 +64,8 @@ namespace Test.Integration
             Assert.NotNull(genericCommandResult.Data);
         }
 
-        [Fact, TestPriority(3)]
-        public async Task Put_login_type()
+        [Fact(DisplayName = "Put Login's Type"), TestPriority(3)]
+        public async Task Put_Login_Type()
         {
             // Arrange
             var requestAllLoginTypeRecords = await _integrationTestFixture.Client.GetAsync($"{API_URL_LOGIN_TYPE}");
@@ -99,8 +99,8 @@ namespace Test.Integration
             Assert.NotNull(genericCommandResult.Data);
         }
 
-        [Fact, TestPriority(4)]
-        public async Task Delete_login_type()
+        [Fact(DisplayName = "Delete Login's Type"), TestPriority(4)]
+        public async Task Delete_Login_Type()
         {
             // Arrange
             var requestAllLoginTypeRecords = await _integrationTestFixture.Client.GetAsync($"{API_URL_LOGIN_TYPE}");
