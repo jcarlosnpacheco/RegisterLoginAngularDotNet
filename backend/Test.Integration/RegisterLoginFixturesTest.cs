@@ -12,6 +12,7 @@ using Xunit;
 
 namespace Test.Integration
 {
+    [TestCaseOrderer("Test.Configs.AlphabeticalOrderer", "Test.Integration")]
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
     public class RegisterLoginFixturesTest
     {
@@ -23,8 +24,8 @@ namespace Test.Integration
             _integrationTestFixture = integrationTestFixture;
         }
 
-        [Fact(DisplayName = "1 - Get All Login's Registers"), TestPriority(1)]
-        public async Task Get_All_Register_Login()
+        [Fact(DisplayName = "1 - Get All Login's Registers")]
+        public async Task Test1_Get_All_Register_Login()
         {
             // Arrange
             var request = await _integrationTestFixture.Client.GetAsync($"{API_URL_REGISTER_LOGIN}");
@@ -36,8 +37,8 @@ namespace Test.Integration
             Assert.True(request.IsSuccessStatusCode);
         }
 
-        [Fact(DisplayName = "2 - Post Login's Register"), TestPriority(2)]
-        public async Task Post_Register_Login()
+        [Fact(DisplayName = "2 - Post Login's Register")]
+        public async Task Test2_Post_Register_Login()
         {
             // Arrange
             var data = new
@@ -67,28 +68,8 @@ namespace Test.Integration
             Assert.NotNull(genericCommandResult.Data);
         }
 
-        [Fact(DisplayName = "4 - Delete Login's Register"), TestPriority(4)]
-        public async Task Delete_Register_Login()
-        {
-            // Arrange
-            var requestAllLoginTypeRecords = await _integrationTestFixture.Client.GetAsync($"{API_URL_REGISTER_LOGIN}");
-            var responseAllLoginTypeRecords = await requestAllLoginTypeRecords.Content.ReadAsStringAsync();
-            var listOfRegisterLogin = JsonConvert.DeserializeObject<IEnumerable<RegisterLoginModel>>(responseAllLoginTypeRecords);
-            var getRegisterLoginToRemove = listOfRegisterLogin
-                               .FirstOrDefault(l => l.LoginName.Contains("LoginName Test"));
-
-            var request = await _integrationTestFixture.Client.DeleteAsync(
-                $"{API_URL_REGISTER_LOGIN}/{getRegisterLoginToRemove.Id}");
-
-            var response = await request.Content.ReadAsStringAsync();
-            var genericCommandResult = JsonConvert.DeserializeObject<GenericCommandResult>(response);
-
-            //Assert
-            Assert.Equal("Successfully deleted", genericCommandResult.Message);
-        }
-
-        [Fact(DisplayName = "3 - Put Login's Register"), TestPriority(3)]
-        public async Task Put_Register_Login()
+        [Fact(DisplayName = "3 - Put Login's Register")]
+        public async Task Test3_Put_Register_Login()
         {
             // Arrange
             var requestAllRecords = await _integrationTestFixture.Client.GetAsync($"{API_URL_REGISTER_LOGIN}");
@@ -123,6 +104,26 @@ namespace Test.Integration
             Assert.True(request.IsSuccessStatusCode);
             Assert.True(genericCommandResult.Success);
             Assert.NotNull(genericCommandResult.Data);
+        }
+
+        [Fact(DisplayName = "4 - Delete Login's Register")]
+        public async Task Test4_Delete_Register_Login()
+        {
+            // Arrange
+            var requestAllLoginTypeRecords = await _integrationTestFixture.Client.GetAsync($"{API_URL_REGISTER_LOGIN}");
+            var responseAllLoginTypeRecords = await requestAllLoginTypeRecords.Content.ReadAsStringAsync();
+            var listOfRegisterLogin = JsonConvert.DeserializeObject<IEnumerable<RegisterLoginModel>>(responseAllLoginTypeRecords);
+            var getRegisterLoginToRemove = listOfRegisterLogin
+                               .FirstOrDefault(l => l.LoginName.Contains("LoginName Test"));
+
+            var request = await _integrationTestFixture.Client.DeleteAsync(
+                $"{API_URL_REGISTER_LOGIN}/{getRegisterLoginToRemove.Id}");
+
+            var response = await request.Content.ReadAsStringAsync();
+            var genericCommandResult = JsonConvert.DeserializeObject<GenericCommandResult>(response);
+
+            //Assert
+            Assert.Equal("Successfully deleted", genericCommandResult.Message);
         }
     }
 }
