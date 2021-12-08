@@ -44,7 +44,7 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 try
                 {
-                    loginType.Name = request.Name;
+                    loginType.SetLoginType(request);
 
                     await _repository.Update(loginType);
 

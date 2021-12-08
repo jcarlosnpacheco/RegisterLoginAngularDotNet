@@ -35,11 +35,7 @@ namespace RegisterLoginAPI.Business.Handlers
                     request.Notifications);
             }
 
-            var loginType = new LoginType
-            {
-                Id = request.Id,
-                Name = request.Name
-            };
+            var loginType = new LoginType(request.Id, request.Name);
 
             try
             {

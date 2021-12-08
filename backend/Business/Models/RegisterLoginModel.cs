@@ -6,10 +6,10 @@ namespace RegisterLoginAPI.Business.Models
 
         public string LoginName { get; set; }
 
-        public string Password { get; set; }
-
         public string Observation { get; set; }
 
         public int LoginTypeId { get; set; }
+
+        public string Password { get; set; }
     }
 }

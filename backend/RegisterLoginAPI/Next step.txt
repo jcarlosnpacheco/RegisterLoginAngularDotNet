@@ -5,7 +5,7 @@
 5 - Create test class library - OK
 	Create unit test - OK
 	Create integration test of login type - OK
-	Create integration test of register login - Pending
+	Create integration test of register login - OK
 6 - Implement criptography - Pending
 7 - Implement auth token (auth) - Pending
 8 - Implement front-end - Pending

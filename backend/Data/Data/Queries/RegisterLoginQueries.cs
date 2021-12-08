@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.DataProtection;
 using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Models;
 using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
@@ -12,8 +13,13 @@ namespace RegisterLoginAPI.Infra.Data.Queries
     public class RegisterLoginQueries : IRegisterLoginQueries
     {
         private readonly DapperContext _dapperContext;
+        private readonly IDataProtectionProvider _dataProtectionProvider;
 
-        public RegisterLoginQueries(DapperContext dapperContext) => _dapperContext = dapperContext;
+        public RegisterLoginQueries(DapperContext dapperContext, IDataProtectionProvider dataProtectionProvider)
+        {
+            _dapperContext = dapperContext;
+            _dataProtectionProvider = dataProtectionProvider;
+        }
 
         public async Task<ICollection<RegisterLoginModel>> GetAllAsync()
         {
@@ -26,7 +32,15 @@ namespace RegisterLoginAPI.Infra.Data.Queries
 
             using var connection = _dapperContext.CreateConnection();
             var registers = await connection.QueryAsync<RegisterLoginModel>(query.ToString());
-            return registers.ToList();
+            var treatedRecords = new List<RegisterLoginModel>();
+
+            foreach (var register in registers)
+            {
+                register.Password = decrypt(register.Password);
+                treatedRecords.Add(register);
+            }
+
+            return treatedRecords.ToList();
         }
 
         public async Task<RegisterLoginModel> GetByIdAsync(int idRegisterLogin)
@@ -40,7 +54,17 @@ namespace RegisterLoginAPI.Infra.Data.Queries
                                              WHERE id = { idRegisterLogin }");
 
             using var connection = _dapperContext.CreateConnection();
-            return await connection.QueryFirstOrDefaultAsync<RegisterLoginModel>(query.ToString());
+            var register = await connection.QueryFirstOrDefaultAsync<RegisterLoginModel>(query.ToString());
+
+            register.Password = decrypt(register.Password);
+
+            return register;
+        }
+
+        private string decrypt(string text)
+        {
+            var protector = _dataProtectionProvider.CreateProtector(text);
+            return protector.Unprotect(text);
         }
     }
 }

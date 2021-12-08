@@ -1,5 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +39,8 @@ namespace RegisterLoginAPI.API
 
             services.AddSingleton(Configuration);
             services.AddControllers();
+            services.AddDataProtection()
+                    .SetApplicationName("RegisterLoginAPI");
 
             #region MediatR
 
