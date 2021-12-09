@@ -17,18 +17,15 @@ namespace RegisterLoginAPI.Business.Handlers
         private readonly IMediator _mediator;
         private readonly IGenericRepository<RegisterLogin> _repositoryRegisterLogin;
         private readonly IGenericRepository<LoginType> _repositoryLoginType;
-        private readonly IDataProtectionProvider _dataProtectionProvider;
 
         public CreateRegisterLoginCommandHandler(
             IMediator mediator,
             IGenericRepository<RegisterLogin> repositoryRegisterLogin,
-            IGenericRepository<LoginType> repositoryLoginType,
-            IDataProtectionProvider dataProtectionProvider)
+            IGenericRepository<LoginType> repositoryLoginType)
         {
             _mediator = mediator;
             _repositoryRegisterLogin = repositoryRegisterLogin;
             _repositoryLoginType = repositoryLoginType;
-            _dataProtectionProvider = dataProtectionProvider;
         }
 
         public async Task<GenericCommandResult> Handle(CreateRegisterLoginCommand request, CancellationToken cancellationToken)
@@ -50,14 +47,14 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 try
                 {
-                    request.Password = encrypt(request.Password);
-
                     var registerLogin = new RegisterLogin(
                         request.LoginName,
                         request.Password,
                         request.Observation,
                         request.LoginTypeId
                         );
+
+                    registerLogin.SetEncryptPassword(request.Password, request.LoginName);
 
                     await _repositoryRegisterLogin.Create(registerLogin);
 
@@ -91,12 +88,6 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 return new GenericCommandResult(false, "Login Type not defined!", null);
             }
-        }
-
-        private string encrypt(string text)
-        {
-            var protector = _dataProtectionProvider.CreateProtector(text);
-            return protector.Protect(text);
         }
     }
 }

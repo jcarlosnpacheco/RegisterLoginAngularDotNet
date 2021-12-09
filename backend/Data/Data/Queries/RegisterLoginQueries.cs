@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.DataProtection;
 using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Models;
 using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
@@ -13,12 +12,10 @@ namespace RegisterLoginAPI.Infra.Data.Queries
     public class RegisterLoginQueries : IRegisterLoginQueries
     {
         private readonly DapperContext _dapperContext;
-        private readonly IDataProtectionProvider _dataProtectionProvider;
 
-        public RegisterLoginQueries(DapperContext dapperContext, IDataProtectionProvider dataProtectionProvider)
+        public RegisterLoginQueries(DapperContext dapperContext)
         {
             _dapperContext = dapperContext;
-            _dataProtectionProvider = dataProtectionProvider;
         }
 
         public async Task<ICollection<RegisterLoginModel>> GetAllAsync()
@@ -36,7 +33,7 @@ namespace RegisterLoginAPI.Infra.Data.Queries
 
             foreach (var register in registers)
             {
-                register.Password = decrypt(register.Password);
+                register.SetPassword(register.Password, register.LoginName);
                 treatedRecords.Add(register);
             }
 
@@ -56,15 +53,9 @@ namespace RegisterLoginAPI.Infra.Data.Queries
             using var connection = _dapperContext.CreateConnection();
             var register = await connection.QueryFirstOrDefaultAsync<RegisterLoginModel>(query.ToString());
 
-            register.Password = decrypt(register.Password);
+            register.SetPassword(register.Password, register.LoginName);
 
             return register;
-        }
-
-        private string decrypt(string text)
-        {
-            var protector = _dataProtectionProvider.CreateProtector(text);
-            return protector.Unprotect(text);
         }
     }
 }

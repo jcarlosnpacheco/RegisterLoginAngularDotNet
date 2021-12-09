@@ -1,6 +1,5 @@
 using Business.Commands.Generics;
 using MediatR;
-using Microsoft.AspNetCore.DataProtection;
 using RegisterLoginAPI.Business.Commands;
 using RegisterLoginAPI.Business.Entity;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
@@ -16,17 +15,15 @@ namespace RegisterLoginAPI.Business.Handlers
     {
         private readonly IMediator _mediator;
         private readonly IGenericRepository<RegisterLogin> _repository;
-        private readonly IDataProtectionProvider _dataProtectionProvider;
 
         public UpdateRegisterLoginCommandHandler(
             IMediator mediator,
-            IGenericRepository<RegisterLogin> repository,
-             IDataProtectionProvider dataProtectionProvider)
+            IGenericRepository<RegisterLogin> repository
+            )
 
         {
             _mediator = mediator;
             _repository = repository;
-            _dataProtectionProvider = dataProtectionProvider;
         }
 
         public async Task<GenericCommandResult> Handle(UpdateRegisterLoginCommand request, CancellationToken cancellationToken)
@@ -48,8 +45,6 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 try
                 {
-                    request.Password = encrypt(request.Password);
-
                     registerLogin.SetUpdateRegisterLogin(request);
 
                     await _repository.Update(registerLogin);
@@ -88,12 +83,6 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 return new GenericCommandResult(false, "Register login not found", registerLogin);
             }
-        }
-
-        private string encrypt(string text)
-        {
-            var protector = _dataProtectionProvider.CreateProtector(text);
-            return protector.Protect(text);
         }
     }
 }
