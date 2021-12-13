@@ -1,4 +1,4 @@
-﻿using RegisterLoginAPI.Business.Commands;
+﻿using RegisterLoginAPI.Business.Commands.LoginType;
 
 namespace RegisterLoginAPI.Business.Entity
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RegisterLoginAPI.Business.Commands;
+using RegisterLoginAPI.Business.Commands.LoginType;
 
 namespace Test.Unit.LoginType
 {
@@ -7,7 +7,7 @@ namespace Test.Unit.LoginType
     public class Delete_LoginTypeUnitTest
     {
         [TestMethod]
-        public void delete_invalid_login_type()
+        public void Delete_invalid_login_type()
         {
             //Arrange
             int idDelete = -1;

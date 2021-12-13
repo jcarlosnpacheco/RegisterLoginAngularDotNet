@@ -1,28 +1,27 @@
 using Business.Commands.Generics;
+using Business.Entity;
 using MediatR;
-using RegisterLoginAPI.Business.Commands.LoginType;
-using RegisterLoginAPI.Business.Entity;
+using RegisterLoginAPI.Business.Commands.User;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
 using RegisterLoginAPI.Business.Notifications;
-using RegisterLoginAPI.Business.Notifications.RegisterLogin;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RegisterLoginAPI.Business.Handlers
 {
-    public class DeleteLoginTypeCommandHandler : IRequestHandler<DeleteLoginTypeCommand, GenericCommandResult>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, GenericCommandResult>
     {
         private readonly IMediator _mediator;
-        private readonly IGenericRepository<LoginType> _repository;
+        private readonly IGenericRepository<User> _repository;
 
-        public DeleteLoginTypeCommandHandler(IMediator mediator, IGenericRepository<LoginType> repository)
+        public DeleteUserCommandHandler(IMediator mediator, IGenericRepository<User> repository)
         {
             _mediator = mediator;
             _repository = repository;
         }
 
-        public async Task<GenericCommandResult> Handle(DeleteLoginTypeCommand request, CancellationToken cancellationToken)
+        public async Task<GenericCommandResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             // Fail Fast Validate
             request.Validate();
@@ -39,16 +38,10 @@ namespace RegisterLoginAPI.Business.Handlers
             {
                 _repository.Delete(request.Id);
 
-                await _mediator.Publish(new LoginTypeDeletedNotification
-                { Id = request.Id, IsDeleted = true }, CancellationToken.None);
-
                 return new GenericCommandResult(true, "Successfully deleted", request);
             }
             catch (Exception ex)
             {
-                await _mediator.Publish(new LoginTypeDeletedNotification
-                { Id = request.Id, IsDeleted = false }, CancellationToken.None);
-
                 await _mediator.Publish(new ErrorNotification
                 { Exception = ex.Message, StackError = ex.StackTrace }, CancellationToken.None);
 

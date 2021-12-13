@@ -1,6 +1,5 @@
 using Business.Commands.Generics;
 using MediatR;
-using Microsoft.AspNetCore.DataProtection;
 using RegisterLoginAPI.Business.Commands;
 using RegisterLoginAPI.Business.Entity;
 using RegisterLoginAPI.Business.Interfaces.Repositories;

@@ -1,4 +1,5 @@
-﻿using Infra.Data.Mapping;
+﻿using Business.Entity;
+using Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 using RegisterLoginAPI.Business.Entity;
 
@@ -13,11 +14,13 @@ namespace RegisterLoginAPI.Infra.Data.Context
 
         public DbSet<RegisterLogin> RegisterLogin { get; set; }
         public DbSet<LoginType> LoginType { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RegisterLoginMap());
             modelBuilder.ApplyConfiguration(new LoginTypeMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RegisterLoginAPI.Business.Commands;
+using RegisterLoginAPI.Business.Commands.LoginType;
 
 namespace Test.Unit
 {
@@ -7,7 +7,7 @@ namespace Test.Unit
     public class InsertLoginTypeUnitTest
     {
         [TestMethod]
-        public void insert_valid_login_type()
+        public void Insert_valid_login_type()
         {
             //Arrange
             var nameOfLoginType = "Name test";
@@ -21,7 +21,7 @@ namespace Test.Unit
         }
 
         [TestMethod]
-        public void insert_invalid_login_type_with_more_50_characters()
+        public void Insert_invalid_login_type_with_more_50_characters()
         {
             //Arrange
             var nameOfLoginType = "Name test with more than 50 characters!!!!!!!!!!!!!";
@@ -35,7 +35,7 @@ namespace Test.Unit
         }
 
         [TestMethod]
-        public void insert_invalid_login_type_without_name()
+        public void Insert_invalid_login_type_without_name()
         {
             //Arrange
             string nameOfLoginType = null;

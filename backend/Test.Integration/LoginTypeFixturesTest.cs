@@ -79,7 +79,7 @@ namespace Test.Integration
                 Url = API_URL_LOGIN_TYPE,
                 Body = new
                 {
-                    Id = getLoginType.Id,
+                    getLoginType.Id,
                     Name = $"updated { getLoginType.Name }"
                 }
             };

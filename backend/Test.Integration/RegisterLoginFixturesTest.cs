@@ -83,7 +83,7 @@ namespace Test.Integration
                 Url = API_URL_REGISTER_LOGIN,
                 Body = new
                 {
-                    Id = getRegisterLogin.Id,
+                    getRegisterLogin.Id,
                     LoginName = $"updated { getRegisterLogin.LoginName }",
                     Password = $"updated { getRegisterLogin.Password }",
                     Observation = $"updated { getRegisterLogin.Observation }",

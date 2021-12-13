@@ -1,13 +1,17 @@
+using Business.Entity;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RegisterLoginAPI.Auth;
 using RegisterLoginAPI.Business.Entity;
+using RegisterLoginAPI.Business.Interfaces.Auth;
 using RegisterLoginAPI.Business.Interfaces.Queries;
 using RegisterLoginAPI.Business.Interfaces.Repositories;
 using RegisterLoginAPI.Infra.Data.Context;
@@ -15,6 +19,7 @@ using RegisterLoginAPI.Infra.Data.Queries;
 using RegisterLoginAPI.Infra.Data.Queries.Dapper.Context;
 using RegisterLoginAPI.Infra.Data.Repositories;
 using System;
+using System.Text;
 
 namespace RegisterLoginAPI.API
 {
@@ -35,8 +40,34 @@ namespace RegisterLoginAPI.API
              * Scoped objects are the same within a request, but different across different requests.
              * Singleton objects are the same for every object and every request.*/
 
+            services.AddCors();
             services.AddSingleton(Configuration);
             services.AddControllers();
+
+            #region Auth
+
+            //https://balta.io/artigos/aspnet-5-autenticacao-autorizacao-bearer-jwt
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["UserKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            services.AddTransient<ITokenService, TokenService>();
+
+            #endregion Auth
 
             #region MediatR
 
@@ -50,6 +81,7 @@ namespace RegisterLoginAPI.API
 
             services.AddTransient<IGenericRepository<RegisterLogin>, RegisterLoginRepository>();
             services.AddTransient<IGenericRepository<LoginType>, LoginTypeRepository>();
+            services.AddTransient<IGenericRepository<User>, UserRepository>();
 
             #endregion repository
 
@@ -70,6 +102,30 @@ namespace RegisterLoginAPI.API
                             Url = new Uri(url)
                         }
                     });
+
+                /*this trick get bearer token into header*/
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                options.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
             });
 
             #endregion Swagger
@@ -94,6 +150,7 @@ namespace RegisterLoginAPI.API
 
             services.AddTransient<IRegisterLoginQueries, RegisterLoginQueries>();
             services.AddTransient<ILoginTypeQueries, LoginTypeQueries>();
+            services.AddTransient<IUserQueries, UserQueries>();
 
             #endregion Queries
         }
@@ -117,7 +174,12 @@ namespace RegisterLoginAPI.API
 
             app.UseRouting();
 
+            #region Auth
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            #endregion Auth
 
             app.UseEndpoints(endpoints =>
             {

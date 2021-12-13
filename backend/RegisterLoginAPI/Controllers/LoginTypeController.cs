@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RegisterLoginAPI.Business.Commands;
+using RegisterLoginAPI.Business.Commands.LoginType;
 using RegisterLoginAPI.Business.Interfaces.Queries;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _loginTypeQueries.GetAllAsync());

@@ -7,5 +7,5 @@
 	Create integration test of login type - OK
 	Create integration test of register login - OK
 6 - Implement criptography - OK
-7 - Implement auth token (auth) - Pending
+7 - Implement bearer token (auth) - OK
 8 - Implement front-end - Pending

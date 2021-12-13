@@ -3,7 +3,7 @@ using Business.Commands.LoginType.Contracts;
 using Flunt.Notifications;
 using MediatR;
 
-namespace RegisterLoginAPI.Business.Commands
+namespace RegisterLoginAPI.Business.Commands.LoginType
 {
     public class UpdateLoginTypeCommand : Notifiable<Notification>, IRequest<GenericCommandResult>
     {

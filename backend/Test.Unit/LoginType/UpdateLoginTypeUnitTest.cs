@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RegisterLoginAPI.Business.Commands;
+using RegisterLoginAPI.Business.Commands.LoginType;
 
 namespace Test.Unit.LoginType
 {
@@ -7,7 +7,7 @@ namespace Test.Unit.LoginType
     public class UpdateLoginTypeUnitTest
     {
         [TestMethod]
-        public void update_valid_login_type()
+        public void Update_valid_login_type()
         {
             //Arrange
             var idLoginType = 1;
@@ -22,7 +22,7 @@ namespace Test.Unit.LoginType
         }
 
         [TestMethod]
-        public void update_login_type_invalid_id()
+        public void Update_login_type_invalid_id()
         {
             //Arrange
             var idLoginType = -1;
@@ -37,7 +37,7 @@ namespace Test.Unit.LoginType
         }
 
         [TestMethod]
-        public void update_login_type_with_name_more_than_50_characters()
+        public void Update_login_type_with_name_more_than_50_characters()
         {
             //Arrange
             var idLoginType = 1;
@@ -52,7 +52,7 @@ namespace Test.Unit.LoginType
         }
 
         [TestMethod]
-        public void update_login_type_without_name()
+        public void Update_login_type_without_name()
         {
             //Arrange
             var idLoginType = 1;

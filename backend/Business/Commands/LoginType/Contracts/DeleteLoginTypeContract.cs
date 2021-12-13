@@ -1,5 +1,5 @@
 ﻿using Flunt.Validations;
-using RegisterLoginAPI.Business.Commands;
+using RegisterLoginAPI.Business.Commands.LoginType;
 
 namespace Business.Commands.LoginType.Contracts
 {
