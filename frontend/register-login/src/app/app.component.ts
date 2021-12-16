@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { MenuItem } from './generic/models/MenuItem';
+import { LoaderService } from './generic/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,10 @@ export class AppComponent {
   menuItems: MenuItem[] = [];
   menuOpened = false;
 
+  constructor(public loaderService: LoaderService) {
+    this.setMenuItems();
+  }
+
   openCloseMenu(): void {
     this.menuOpened = !this.menuOpened;
   }
@@ -20,13 +25,18 @@ export class AppComponent {
       {
         icon: 'drag_indicator',
         routerLink: 'loginType',
-        tooltip: 'click to create your Login Type',
+        tooltip: 'Login Type',
       },
       {
         icon: 'drag_indicator',
         routerLink: 'registerLogin',
-        tooltip: 'click to create your Register Login',
+        tooltip: 'Register Login',
       },
+      {
+        icon: 'logout',
+        routerLink: '',
+        tooltip: 'Logout',
+      }
     ];
   }
 }
