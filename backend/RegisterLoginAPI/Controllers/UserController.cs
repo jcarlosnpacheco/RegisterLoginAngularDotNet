@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegisterLoginAPI.Business.Commands.User;
 using RegisterLoginAPI.Business.Interfaces.Queries;
@@ -18,6 +19,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
         {
             var response = await _mediator.Send(command);
@@ -25,6 +27,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Put([FromBody] UpdateUserCommand command)
         {
             var response = await _mediator.Send(command);
@@ -32,6 +35,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var obj = new DeleteUserCommand(id);

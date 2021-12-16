@@ -1,5 +1,6 @@
 ﻿using Business.Entity;
 using Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegisterLoginAPI.Business.Interfaces.Auth;
 using RegisterLoginAPI.Business.Interfaces.Queries;
@@ -22,6 +23,7 @@ namespace RegisterLoginAPI.API.Controllers
 
         [HttpPost]
         [Route("login")]
+        [Authorize(Roles = "admin, users")]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] LoginModel login)
         {
             var userReturned = await _userQueries.GetAsync(login.Username, login.Password);

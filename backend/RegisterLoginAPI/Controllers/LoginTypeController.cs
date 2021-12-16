@@ -22,19 +22,21 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _loginTypeQueries.GetAllAsync());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await _loginTypeQueries.GetByIdAsync(id));
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Post([FromBody] CreateLoginTypeCommand command)
         {
             var response = await _mediator.Send(command);
@@ -42,6 +44,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Put([FromBody] UpdateLoginTypeCommand command)
         {
             var response = await _mediator.Send(command);
@@ -49,6 +52,7 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Delete(int id)
         {
             var obj = new DeleteLoginTypeCommand(id);

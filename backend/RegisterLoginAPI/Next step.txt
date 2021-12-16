@@ -8,4 +8,6 @@
 	Create integration test of register login - OK
 6 - Implement criptography - OK
 7 - Implement bearer token (auth) - OK
-8 - Implement front-end - Pending
+8 - Implement front-end - doing
+	organize modules - OK
+	install material design - pending

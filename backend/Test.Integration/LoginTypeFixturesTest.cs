@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Test.Integration.Configs;
 using Xunit;
 
+//https://itbackyard.com/how-to-mock-authorize-attribute-for-testing-in-asp-net-core-3-1/  how bypass authorization integration test
 namespace Test.Integration
 {
     [Collection(nameof(IntegrationApiTestFixtureCollection))]
