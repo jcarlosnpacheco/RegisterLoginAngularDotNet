@@ -1,13 +1,21 @@
-1 - Adjust queries Login Type - OK
-2 - Adjust Handlers and Command's - OK
-3 - Create controller to Login Type - OK
-4 - Update-database migration - OK
-5 - Create test class library - OK
-	Create unit test - OK
-	Create integration test of login type - OK
-	Create integration test of register login - OK
-6 - Implement criptography - OK
-7 - Implement bearer token (auth) - OK
-8 - Implement front-end - doing
-	organize modules - OK
-	install material design - pending
+Adjust queries Login Type - OK
+Adjust Handlers and Command's - OK
+Create controller to Login Type - OK
+Update-database migration - OK
+Create test class library - OK
+Create unit test - OK
+Create integration test of login type - OK
+Create integration test of register login - OK
+Implement criptography - OK
+Implement bearer token (auth) - OK
+Implement front-end - doing
+organize modules - OK
+install material design - OK
+install flex layout - OK
+create interceptor to save token from back-end - pending
+create login page - pending
+create logoff action - pending 
+create login type page - pending
+create register login page - pending 
+
+	
