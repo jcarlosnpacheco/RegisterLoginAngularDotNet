@@ -12,7 +12,8 @@ Implement front-end - doing
 organize modules - OK
 install material design - OK
 install flex layout - OK
-create interceptor to save token from back-end - pending
+create interceptor to save token from back-end - OK
+create service and model to save token from back-end - pending 
 create login page - pending
 create logoff action - pending 
 create login type page - pending
