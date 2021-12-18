@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterLoginComponent } from './register-login.component';
+import { NgModule } from '@angular/core';
+
+import { RegisterLoginComponent } from './components/register-login.component';
 
 @NgModule({
   imports: [

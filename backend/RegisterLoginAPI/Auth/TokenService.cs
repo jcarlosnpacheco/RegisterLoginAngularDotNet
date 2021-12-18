@@ -18,7 +18,7 @@ namespace RegisterLoginAPI.Auth
             _configuration = configuration;
         }
 
-        public string GenerateToken(UserModel user)
+        public (string, DateTime?) GenerateToken(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["UserKey"]);
@@ -33,7 +33,8 @@ namespace RegisterLoginAPI.Auth
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+
+            return (tokenHandler.WriteToken(token), tokenDescriptor.Expires);
         }
     }
 }

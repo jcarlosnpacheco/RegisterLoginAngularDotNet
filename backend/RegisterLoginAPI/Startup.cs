@@ -174,6 +174,11 @@ namespace RegisterLoginAPI.API
 
             app.UseRouting();
 
+            app.UseCors(x => x
+             .AllowAnyOrigin()
+             .AllowAnyMethod()
+             .AllowAnyHeader());
+
             #region Auth
 
             app.UseAuthentication();

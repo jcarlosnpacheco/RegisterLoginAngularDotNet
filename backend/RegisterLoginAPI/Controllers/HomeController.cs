@@ -23,7 +23,6 @@ namespace RegisterLoginAPI.API.Controllers
 
         [HttpPost]
         [Route("login")]
-        [Authorize(Roles = "admin, users")]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] LoginModel login)
         {
             var userReturned = await _userQueries.GetAsync(login.Username, login.Password);
@@ -39,7 +38,8 @@ namespace RegisterLoginAPI.API.Controllers
             return new
             {
                 user = login,
-                token = token
+                token = token.Item1,
+                expires = token.Item2
             };
         }
     }
