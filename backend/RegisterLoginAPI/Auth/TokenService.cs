@@ -18,7 +18,7 @@ namespace RegisterLoginAPI.Auth
             _configuration = configuration;
         }
 
-        public (string, DateTime?) GenerateToken(UserModel user)
+        public string GenerateToken(UserModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["UserKey"]);
@@ -29,12 +29,12 @@ namespace RegisterLoginAPI.Auth
                     new Claim(ClaimTypes.Name, user.UserName.ToString()),
                     new Claim(ClaimTypes.Role, user.Role.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return (tokenHandler.WriteToken(token), tokenDescriptor.Expires);
+            return (tokenHandler.WriteToken(token));
         }
     }
 }

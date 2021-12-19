@@ -13,10 +13,13 @@ organize modules - OK
 install material design - OK
 install flex layout - OK
 create interceptor to save token from back-end - OK
-create service and model to save token from back-end - pending 
-create login page - pending
-create logoff action - pending 
-create login type page - pending
+create service and model to save token from back-end - OK 
+create login page - OK
+create logoff action - OK 
 create register login page - pending 
+	grid with list of register's 
+	field to search some register 
+	create new register
+	update register 
 
 	

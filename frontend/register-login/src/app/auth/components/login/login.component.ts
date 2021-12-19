@@ -6,11 +6,11 @@ import { MessageService } from 'src/app/generic/services/message.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
-export class LoginPageComponent implements OnInit {
+export class LoginComponent implements OnInit {
   hide = true;
   errorMessage = '';
 
@@ -27,8 +27,8 @@ export class LoginPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.hasToken() && this.authService.isLoggedIn()) {
-      this.router.navigate(['/home']);
+    if (!this.authService.hasToken()) {
+      this.router.navigate(['/']);
     }
   }
 
@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.logon(this.loginForm.value).subscribe(
         () => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/registerLogin']);
         },
         (error) => {
           this.messageService.showErrorMessage('User not authenticated');

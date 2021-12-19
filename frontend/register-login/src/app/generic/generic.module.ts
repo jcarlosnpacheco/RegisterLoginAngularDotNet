@@ -4,8 +4,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MessageComponent } from './components/message/message.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MaterialModule } from './material.module';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, FlexLayoutModule],

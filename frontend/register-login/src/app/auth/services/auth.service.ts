@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import jwt_decode from 'jwt-decode';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -11,11 +12,14 @@ import { Logon } from '../models/logon.model';
   providedIn: 'root',
 })
 export class AuthService {
+  isLogged$: Observable<boolean | null>;
+  loggedState = new BehaviorSubject<boolean | null>(null);
   private accessToken = 'access_token';
-  private expirationToken = 'expiration_token';
   private urlLogon = `${environment.apiUrl}/Home`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.isLogged$ = this.loggedState.asObservable();
+  }
 
   // Session
   logon(logon: Logon): Observable<AuthenticateResult> {
@@ -32,8 +36,14 @@ export class AuthService {
     return localStorage.getItem(this.accessToken);
   }
 
-  getExpirationToken(): string | null {
-    return localStorage.getItem(this.expirationToken);
+  getExpiration(): any {
+    const tokenDecoded = this.getTokenDecoded();
+
+    if (tokenDecoded === null) {
+      return null;
+    }
+
+    return tokenDecoded.exp;
   }
 
   hasToken(): boolean {
@@ -42,26 +52,37 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const currentTime = new Date().getTime() / 1000;
-    const expiration = this.getExpirationToken()?.toString();
+    const expiration = this.getExpiration();
 
-    return expiration == null ? false : expiration > currentTime.toString();
+    if (expiration === null) {
+      return false;
+    }
+
+    return expiration > currentTime.toString();
+  }
+
+  setLoggedId(): void {
+    let logged = this.isLoggedIn();
+    this.loggedState.next(logged);
+  }
+
+  getTokenDecoded(): any {
+    const token = this.getToken();
+
+    if (token) {
+      return jwt_decode(token);
+    }
+
+    return null;
   }
 
   private setSession(authResult: AuthenticateResult) {
     localStorage.setItem(this.accessToken, authResult.token);
-    localStorage.setItem(
-      this.expirationToken,
-      authResult.expires.toString()
-    );
-
-    console.log(this.isLoggedIn());
-    console.log(this.hasToken());
-    console.log(this.getExpirationToken());
-
+    this.setLoggedId();
   }
 
   private cleanSession() {
     localStorage.removeItem(this.accessToken);
-    localStorage.removeItem(this.expirationToken);
+    this.setLoggedId();
   }
 }

@@ -38,8 +38,7 @@ namespace RegisterLoginAPI.API.Controllers
             return new
             {
                 user = login,
-                token = token.Item1,
-                expires = token.Item2
+                token = token
             };
         }
     }

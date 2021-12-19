@@ -1,12 +1,12 @@
 <mat-toolbar color="primary" class="mat-elevation-z3">
-  <button mat-icon-button (click)="openCloseMenu.emit()">
+  <button *ngIf="isLogged$ | async" mat-icon-button (click)="openCloseMenu.emit()">
     <mat-icon>menu</mat-icon>
   </button>
 
   <div fxLayout="column"  >
     <span class="title">Register Login System</span>
 
-    <span class="subtitle" fxHide.xs> Subtitle... </span>
+    <span class="subtitle" fxHide.xs>Easily save your logins!</span>
   </div>
 
   <span fxFlex></span>

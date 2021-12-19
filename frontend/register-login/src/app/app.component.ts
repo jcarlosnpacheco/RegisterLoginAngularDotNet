@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 import { MenuItem } from './generic/models/MenuItem';
 import { LoaderService } from './generic/services/loader.service';
@@ -8,25 +9,26 @@ import { LoaderService } from './generic/services/loader.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'Register Login';
+export class AppComponent implements OnInit {
   menuItems: MenuItem[] = [];
   menuOpened = false;
+  isLogged$ = this.authService.isLogged$;
 
-  constructor(public loaderService: LoaderService) {
+  constructor(
+    public loaderService: LoaderService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
     this.setMenuItems();
   }
 
   openCloseMenu(): void {
     this.menuOpened = !this.menuOpened;
   }
+
   private setMenuItems(): void {
     this.menuItems = [
-      {
-        icon: 'drag_indicator',
-        routerLink: 'loginType',
-        tooltip: 'Login Type',
-      },
       {
         icon: 'drag_indicator',
         routerLink: 'registerLogin',
@@ -34,9 +36,9 @@ export class AppComponent {
       },
       {
         icon: 'logout',
-        routerLink: '',
+        routerLink: 'logout',
         tooltip: 'Logout',
-      }
+      },
     ];
   }
 }

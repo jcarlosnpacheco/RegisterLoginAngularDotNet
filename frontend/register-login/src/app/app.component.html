@@ -1,27 +1,31 @@
-<app-toolbar (openCloseMenu)="openCloseMenu()">
-</app-toolbar>
 
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    *ngIf="menuOpened"
-    #drawer
-    class="sidenav"
-    fixedInViewport
-    [mode]="'side'"
-    [opened]="true"
-  >
-    <mat-nav-list class="nav-list__container">
-      <ng-container *ngFor="let menuItem of menuItems">
-        <a mat-list-item [routerLink]="menuItem.routerLink">
-          <mat-icon> {{ menuItem.icon }} </mat-icon> {{ menuItem.tooltip }}
-        </a>
-      </ng-container>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div *ngIf="loaderService.isLoading | async" class="loader-container uploader-status">
-      <mat-spinner></mat-spinner>
-    </div>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  <app-toolbar (openCloseMenu)="openCloseMenu()"> </app-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      *ngIf="menuOpened && (isLogged$ | async)"
+      class="sidenav"
+      fixedInViewport
+      [mode]="'side'"
+      [opened]="true"
+    >
+      <mat-nav-list class="nav-list__container">
+        <ng-container *ngFor="let menuItem of menuItems">
+          <a mat-list-item [routerLink]="menuItem.routerLink">
+            <mat-icon> {{ menuItem.icon }} </mat-icon> {{ menuItem.tooltip }}
+          </a>
+        </ng-container>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div
+        *ngIf="loaderService.isLoading | async"
+        class="loader-container uploader-status"
+      >
+        <mat-spinner></mat-spinner>
+      </div>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+

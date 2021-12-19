@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { GenericModule } from './../generic/generic.module';
 import { MaterialModule } from './../generic/material.module';
-import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     FormsModule,
     MaterialModule
   ],
-  declarations: [LoginPageComponent],
-  exports: [LoginPageComponent]
+  declarations: [LoginComponent, LogoutComponent],
+  exports: [LoginComponent,LogoutComponent]
 })
 export class AuthModule { }

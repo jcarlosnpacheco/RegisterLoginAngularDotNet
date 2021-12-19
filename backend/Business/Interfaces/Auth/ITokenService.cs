@@ -6,6 +6,6 @@ namespace RegisterLoginAPI.Business.Interfaces.Auth
 {
     public interface ITokenService
     {
-        (string, DateTime?) GenerateToken(UserModel user);
+        string GenerateToken(UserModel user);
     }
 }
