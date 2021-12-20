@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/services/auth.service';
 
 import { MenuItem } from './generic/models/MenuItem';
 import { LoaderService } from './generic/services/loader.service';
@@ -12,11 +11,10 @@ import { LoaderService } from './generic/services/loader.service';
 export class AppComponent implements OnInit {
   menuItems: MenuItem[] = [];
   menuOpened = false;
-  isLogged$ = this.authService.isLogged$;
 
   constructor(
-    public loaderService: LoaderService,
-    private authService: AuthService
+    public loaderService: LoaderService
+
   ) {}
 
   ngOnInit(): void {

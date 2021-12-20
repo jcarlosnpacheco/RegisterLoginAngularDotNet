@@ -9,5 +9,7 @@ namespace RegisterLoginAPI.Business.Interfaces.Queries
         Task<ICollection<RegisterLoginModel>> GetAllAsync();
 
         Task<RegisterLoginModel> GetByIdAsync(int idRegisterLogin);
+
+        Task<ICollection<RegisterLoginModel>> GetAllByNameAsync(string name);
     }
 }

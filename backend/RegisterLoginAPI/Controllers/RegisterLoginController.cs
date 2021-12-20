@@ -22,13 +22,23 @@ namespace RegisterLoginAPI.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllRegisterLogin")]
         [Authorize(Roles = "admin, users")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAllRegisterLogin()
         {
             return Ok(await _registerLoginQueries.GetAllAsync());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetRegisterLoginByName/{name}")]
+        [Authorize(Roles = "admin, users")]
+        public async Task<IActionResult> Get(string name)
+        {
+            return Ok(await _registerLoginQueries.GetAllByNameAsync(name));
+        }
+
+        [HttpGet]
+        [Route("GetRegisterLoginById/{id}")]
         [Authorize(Roles = "admin, users")]
         public async Task<IActionResult> Get(int id)
         {

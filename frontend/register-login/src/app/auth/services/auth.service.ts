@@ -12,13 +12,16 @@ import { Logon } from '../models/logon.model';
   providedIn: 'root',
 })
 export class AuthService {
-  isLogged$: Observable<boolean | null>;
-  loggedState = new BehaviorSubject<boolean | null>(null);
+  private loggedState = new BehaviorSubject<boolean>(false);
   private accessToken = 'access_token';
   private urlLogon = `${environment.apiUrl}/Home`;
 
   constructor(private http: HttpClient) {
-    this.isLogged$ = this.loggedState.asObservable();
+    //this.isLogged$ = this.loggedState.asObservable()
+  }
+
+  logged() {
+    return this.loggedState.asObservable();
   }
 
   // Session
@@ -51,19 +54,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const currentTime = new Date().getTime() / 1000;
-    const expiration = this.getExpiration();
-
-    if (expiration === null) {
-      return false;
-    }
-
-    return expiration > currentTime.toString();
-  }
-
-  setLoggedId(): void {
-    let logged = this.isLoggedIn();
-    this.loggedState.next(logged);
+    return new Date().getTime() > this.getExpiration();
   }
 
   getTokenDecoded(): any {
@@ -77,12 +68,13 @@ export class AuthService {
   }
 
   private setSession(authResult: AuthenticateResult) {
+    localStorage.clear();
     localStorage.setItem(this.accessToken, authResult.token);
-    this.setLoggedId();
+    this.loggedState.next(this.isLoggedIn());
   }
 
   private cleanSession() {
+    this.loggedState.next(false);
     localStorage.removeItem(this.accessToken);
-    this.setLoggedId();
   }
 }

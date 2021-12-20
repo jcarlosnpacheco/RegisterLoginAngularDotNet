@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { GenericModule } from './generic/generic.module';
 import { AuthInterceptor } from './generic/interceptors/auth.interceptor';
 import { MaterialModule } from './generic/material.module';
+import { RegisterLoginModule } from './register-login/register-login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { MaterialModule } from './generic/material.module';
     MaterialModule,
     RouterModule,
     BrowserAnimationsModule,
+    RegisterLoginModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

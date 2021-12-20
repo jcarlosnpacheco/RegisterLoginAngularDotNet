@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 
+
+
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
@@ -14,7 +16,8 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.logoff();
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
+
   }
 
 }
