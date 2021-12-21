@@ -7,7 +7,7 @@
       <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
         <div class="col">
           <mat-form-field>
-            <input matInput placeholder="Type Login Name..." formControlName="loginName"/>
+            <input required matInput  placeholder="Type Login Name..." formControlName="loginName"/>
             <mat-error *ngIf="registerLoginForm.controls['loginName'].hasError('required')">
               Login Name <strong>required</strong>
             </mat-error>
@@ -20,7 +20,7 @@
       <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
         <div class="col">
           <mat-form-field >
-            <input matInput placeholder="Type password..." formControlName="password" />
+            <input required matInput  placeholder="Type password..." formControlName="password" />
             <mat-error *ngIf="registerLoginForm.controls['password'].hasError('required')">
               Password <strong>required</strong>
             </mat-error>
@@ -30,7 +30,7 @@
       <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
         <div class="col">
           <mat-form-field >
-            <textarea matInput placeholder="Type some observation" formControlName="observation"></textarea>
+            <textarea matInput  placeholder="Type some observation" formControlName="observation"></textarea>
           </mat-form-field>
         </div>
       </div>

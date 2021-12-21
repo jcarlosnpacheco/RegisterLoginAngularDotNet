@@ -15,4 +15,8 @@ export class ToolbarComponent {
   constructor(private authService: AuthService) {
   }
 
+  logoff() {
+    this.authService.logoff();
+    window.location.reload();
+  }
 }

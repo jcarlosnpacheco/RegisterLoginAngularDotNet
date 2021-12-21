@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!this.authService.hasToken()) {
-      this.router.navigate(['/']);
+    if (this.authService.hasToken()) {
+      this.router.navigate(['/registerLogin']);
     }
   }
 

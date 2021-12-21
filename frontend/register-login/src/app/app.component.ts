@@ -33,25 +33,19 @@ export class AppComponent implements AfterViewInit {
 
   private getCredentials(): void {
     if (this.authService.hasToken()) {
-      this.setMenuItems();
-      this.router.navigate(['/registerLogin']);
+      //this.setMenuItems();
     } else {
       this.router.navigate(['']);
     }
   }
 
-  private setMenuItems(): void {
+  /*private setMenuItems(): void {
     this.menuItems = [
       {
         icon: 'drag_indicator',
         routerLink: 'registerLogin',
         tooltip: 'Register Login',
-      } /*,
-      {
-        icon: 'logout',
-        routerLink: 'logout',
-        tooltip: 'Logout',
-      },*/,
+      }
     ];
-  }
+  }*/
 }

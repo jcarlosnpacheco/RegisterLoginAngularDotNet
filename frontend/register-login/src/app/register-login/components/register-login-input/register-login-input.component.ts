@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/generic/services/message.service';
 import { ValidateFormFieldsService } from 'src/app/generic/services/validate-form-fields.service';
@@ -17,7 +17,7 @@ export class RegisterLoginInputComponent implements OnInit {
   @Input() registerLoginId: number;
   @Output() submitted = new EventEmitter<any>();
 
-  registerLoginForm!: FormGroup;
+  registerLoginForm: any;
 
   constructor(
     private fb: FormBuilder,
@@ -32,21 +32,23 @@ export class RegisterLoginInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createForm(this.registerLoginId);
+
     if (this.registerLoginId > 0) {
       this.registerLogin.getById(this.registerLoginId).subscribe((register) => {
         this.registerLoginForm.patchValue(register);
       });
     }
+
+    this.createForm(this.registerLoginId);
   }
 
   createForm(registerLoginId: number) {
     this.registerLoginForm = this.fb.group({
       id: [registerLoginId],
-      loginName: [null, Validators.required],
-      password: [null, Validators.required],
-      observation: [],
-      loginTypeId: ['1']
+      loginName: [null,Validators.compose([Validators.required, Validators.maxLength(50)])],
+      password: [null,Validators.compose([Validators.required])],
+      observation: [null],
+      loginTypeId: [1]
     });
   }
 

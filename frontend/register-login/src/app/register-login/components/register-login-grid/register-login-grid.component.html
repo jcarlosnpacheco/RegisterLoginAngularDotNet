@@ -89,13 +89,13 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="action">
+        <ng-container matColumnDef="Action">
           <th mat-header-cell *matHeaderCellDef >Actions</th>
           <td mat-cell *matCellDef="let element" >
             <button
               mat-icon-button
               matTooltip="{{ 'Change record ' + element.loginName }}"
-              routerLink="/registerLogin/update/{{ element.Id }}"
+              routerLink="/registerLogin/update/{{ element.id }}"
             >
               <mat-icon class="edit-icon">edit</mat-icon>
             </button>

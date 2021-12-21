@@ -17,10 +17,11 @@ export class AuthService {
   private urlLogon = `${environment.apiUrl}/Home`;
 
   constructor(private http: HttpClient) {
-    //this.isLogged$ = this.loggedState.asObservable()
+
   }
 
   logged() {
+    this.loggedState.next(this.hasToken());
     return this.loggedState.asObservable();
   }
 
@@ -79,7 +80,7 @@ export class AuthService {
   }
 
   private cleanSession() {
-    this.loggedState.next(this.hasToken());
     localStorage.removeItem(this.accessToken);
+    this.loggedState.next(this.hasToken());
   }
 }

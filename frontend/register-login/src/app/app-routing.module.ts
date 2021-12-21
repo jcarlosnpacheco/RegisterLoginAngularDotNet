@@ -16,8 +16,9 @@ const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'registerLogin', component: RegisterLoginGridComponent },
-  { path: 'registerLogin/create', component: RegisterLoginCreateComponent },
   { path: 'registerLogin/update/:id', component: RegisterLoginUpdateComponent },
+  { path: 'registerLogin/create', component: RegisterLoginCreateComponent }
+  ,
   /*{
     path: 'registerLogin',
     loadChildren: () =>

@@ -20,12 +20,12 @@ import { RegisterLoginService } from '../../services/register-login.service';
 export class RegisterLoginGridComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['Id', 'LoginName', 'Password', 'Observation', 'action'];
+  displayedColumns: string[] = ['Id', 'LoginName', 'Password', 'Observation', 'Action'];
 
   dataSource: any;
 
   searchRegisterForm = this.fb.group({
-    registerLoginName: [null, Validators.compose([Validators.required])],
+    registerLoginName: [null, [Validators.required]],
   });
 
   constructor(
