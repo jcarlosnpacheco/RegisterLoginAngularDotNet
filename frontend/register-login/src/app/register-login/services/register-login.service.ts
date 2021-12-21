@@ -24,6 +24,12 @@ export class RegisterLoginService {
     );
   }
 
+  getById(id: number): Observable<RegisterLogin[]> {
+    return this.http.get<RegisterLogin[]>(
+      `${this.urlRegister}/GetRegisterLoginById/${id}`
+    );
+  }
+
   getAll(): Observable<RegisterLogin[]> {
     return this.http.get<RegisterLogin[]>(
       `${this.urlRegister}/GetAllRegisterLogin`

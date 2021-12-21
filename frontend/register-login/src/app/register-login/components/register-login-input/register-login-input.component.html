@@ -1,0 +1,65 @@
+<form #formRegisterLogin="ngForm" [formGroup]="registerLoginForm">
+  <mat-card class="title-card">
+    <mat-card-header>
+      <mat-card-title>{{ titlePage }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Type Login Name..." formControlName="loginName"/>
+            <mat-error *ngIf="registerLoginForm.controls['loginName'].hasError('required')">
+              Login Name <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="registerLoginForm.controls['loginName'].hasError('maxlength')">
+              Must have until <strong>50 characters</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+        <div class="col">
+          <mat-form-field >
+            <input matInput placeholder="Type password..." formControlName="password" />
+            <mat-error *ngIf="registerLoginForm.controls['password'].hasError('required')">
+              Password <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+        <div class="col">
+          <mat-form-field >
+            <textarea matInput placeholder="Type some observation" formControlName="observation"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <div fxLayout>
+      <div class="full-width">
+        <button
+          matTooltip="Cancel the operation, back previos page"
+          mat-raised-button
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+        <button
+          type="reset"
+          matTooltip="Clear fields"
+          mat-raised-button
+          color="accent"
+          (click)="onReset(formRegisterLogin)"
+        >
+          Clear
+        </button>
+
+        <button mat-raised-button color="primary" (click)="onSubmit()">
+          {{ submitButton }}
+        </button>
+
+      </div>
+
+    </div>
+  </mat-card>
+</form>

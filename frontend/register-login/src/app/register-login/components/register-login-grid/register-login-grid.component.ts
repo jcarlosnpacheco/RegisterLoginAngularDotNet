@@ -5,7 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { ConfirmationDialogComponent } from 'src/app/generic/components/confirmation-dialog/confirmation-dialog.component';
 import { MessageService } from 'src/app/generic/services/message.service';
 import { RegisterLogin } from 'src/app/register-login/models/register-login';
@@ -34,13 +33,8 @@ export class RegisterLoginGridComponent {
     private router: Router,
     private message: MessageService,
     private dialog: MatDialog,
-    private registerLoginService: RegisterLoginService,
-    private authService: AuthService
+    private registerLoginService: RegisterLoginService
   ) {
-
-    if (!authService.isLoggedIn()){
-      router.navigate(["/"]);
-    }
 
     this.initiateGrid();
   }

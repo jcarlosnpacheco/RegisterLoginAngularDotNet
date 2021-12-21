@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 import { MenuItem } from './generic/models/MenuItem';
 import { LoaderService } from './generic/services/loader.service';
@@ -8,21 +10,34 @@ import { LoaderService } from './generic/services/loader.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   menuItems: MenuItem[] = [];
   menuOpened = false;
+  isLogged$ = this.authService.logged();
 
   constructor(
-    public loaderService: LoaderService
-
+    public loaderService: LoaderService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.setMenuItems();
+  ngAfterViewInit(): void {
+
+
+    this.getCredentials();
   }
 
   openCloseMenu(): void {
     this.menuOpened = !this.menuOpened;
+  }
+
+  private getCredentials(): void {
+    if (this.authService.hasToken()) {
+      this.setMenuItems();
+      this.router.navigate(['/registerLogin']);
+    } else {
+      this.router.navigate(['']);
+    }
   }
 
   private setMenuItems(): void {
@@ -31,12 +46,12 @@ export class AppComponent implements OnInit {
         icon: 'drag_indicator',
         routerLink: 'registerLogin',
         tooltip: 'Register Login',
-      },
+      } /*,
       {
         icon: 'logout',
         routerLink: 'logout',
         tooltip: 'Logout',
-      },
+      },*/,
     ];
   }
 }

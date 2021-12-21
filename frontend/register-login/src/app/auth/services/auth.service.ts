@@ -53,9 +53,14 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
-  isLoggedIn(): boolean {
-    return new Date().getTime() > this.getExpiration();
-  }
+  /*isLoggedIn(): boolean {
+    const currentTime = new Date().getTime() /1000;
+    const expiration = this.getExpiration();
+
+    if (expiration === null) return false;
+
+    return currentTime > expiration;
+  }*/
 
   getTokenDecoded(): any {
     const token = this.getToken();
@@ -70,11 +75,11 @@ export class AuthService {
   private setSession(authResult: AuthenticateResult) {
     localStorage.clear();
     localStorage.setItem(this.accessToken, authResult.token);
-    this.loggedState.next(this.isLoggedIn());
+    this.loggedState.next(this.hasToken());
   }
 
   private cleanSession() {
-    this.loggedState.next(false);
+    this.loggedState.next(this.hasToken());
     localStorage.removeItem(this.accessToken);
   }
 }

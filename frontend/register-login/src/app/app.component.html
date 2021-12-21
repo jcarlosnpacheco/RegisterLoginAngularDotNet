@@ -3,7 +3,7 @@
 
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav
-      *ngIf="menuOpened"
+      *ngIf="menuOpened && (isLogged$ | async)"
       class="sidenav"
       fixedInViewport
       [mode]="'side'"
