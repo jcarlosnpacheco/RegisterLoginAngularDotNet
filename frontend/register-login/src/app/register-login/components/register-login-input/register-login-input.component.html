@@ -4,33 +4,63 @@
       <mat-card-title>{{ titlePage }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
-        <div class="col">
-          <mat-form-field>
-            <input required matInput  placeholder="Type Login Name..." formControlName="loginName"/>
-            <mat-error *ngIf="registerLoginForm.controls['loginName'].hasError('required')">
+      <div fxLayout>
+        <div class="col full-width">
+          <mat-form-field [style.width.px]="220">
+            <input
+              matInput
+              placeholder="Type Login Name..."
+              formControlName="loginName"
+              required
+            />
+            <mat-error
+              *ngIf="
+                registerLoginForm.controls['loginName'].hasError('required')
+              "
+            >
               Login Name <strong>required</strong>
             </mat-error>
-            <mat-error *ngIf="registerLoginForm.controls['loginName'].hasError('maxlength')">
+            <mat-error
+              *ngIf="
+                registerLoginForm.controls['loginName'].hasError('maxlength')
+              "
+            >
               Must have until <strong>50 characters</strong>
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
-        <div class="col">
-          <mat-form-field >
-            <input required matInput  placeholder="Type password..." formControlName="password" />
-            <mat-error *ngIf="registerLoginForm.controls['password'].hasError('required')">
+        <div class="col full-width">
+          <mat-form-field [style.width.px]="220">
+            <input
+              required
+              matInput
+              placeholder="Type password..."
+              formControlName="password"
+            />
+            <mat-error
+              *ngIf="
+                registerLoginForm.controls['password'].hasError('required')
+              "
+            >
               Password <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <div fxLayout fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
-        <div class="col">
-          <mat-form-field >
-            <textarea matInput  placeholder="Type some observation" formControlName="observation"></textarea>
+        <div class="col full-width">
+          <mat-form-field [style.width.px]="220">
+            <textarea
+              required
+              matInput
+              placeholder="Type obs..."
+              formControlName="observation"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                registerLoginForm.controls['observation'].hasError('required')
+              "
+            >
+              observation <strong>required</strong>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -40,12 +70,14 @@
         <button
           matTooltip="Cancel the operation, back previos page"
           mat-raised-button
+          class="button-margin-right"
           (click)="onCancel()"
         >
           Cancel
         </button>
         <button
           type="reset"
+          class="button-margin-right"
           matTooltip="Clear fields"
           mat-raised-button
           color="accent"
@@ -57,9 +89,7 @@
         <button mat-raised-button color="primary" (click)="onSubmit()">
           {{ submitButton }}
         </button>
-
       </div>
-
     </div>
   </mat-card>
 </form>

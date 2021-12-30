@@ -9,7 +9,13 @@
 
 <form #formSearchRegister="ngForm" [formGroup]="searchRegisterForm">
   <mat-card class="search-register-card">
-    <div class="row margin-left" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+    <div
+      class="row margin-left"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayout.sm="column"
+      fxLayout.md="column"
+    >
       <div class="col">
         <mat-form-field class="full-width">
           <mat-label>Type to search register..</mat-label>
@@ -22,7 +28,13 @@
             appUppercase
             required
           />
-          <mat-error *ngIf="searchRegisterForm.controls['registerLoginName'].hasError('required')">
+          <mat-error
+            *ngIf="
+              searchRegisterForm.controls['registerLoginName'].hasError(
+                'required'
+              )
+            "
+          >
             Register's login name <strong>required</strong>
           </mat-error>
         </mat-form-field>
@@ -31,7 +43,10 @@
         <button
           matTooltip="Search all login records that contain the characters entered"
           mat-raised-button
-          class="color-button-pesquisar button-margin-botton"
+          class="
+            color-button-pesquisar
+            button-margin-botton button-margin-right
+          "
           (click)="searchRegisterLogin(registerLoginName.value)"
         >
           Search
@@ -41,7 +56,7 @@
           matTooltip="Clear the search field"
           mat-raised-button
           color="accent"
-          class="button-margin-botton"
+          class="button-margin-botton button-margin-right"
           (click)="clear(formSearchRegister)"
         >
           Clear
@@ -64,34 +79,34 @@
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" class="full-width" matSort>
         <ng-container matColumnDef="Id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header >Id</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
           <td mat-cell *matCellDef="let element">{{ element.id }}</td>
         </ng-container>
 
         <ng-container matColumnDef="LoginName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header >Login Name</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Login Name</th>
           <td mat-cell *matCellDef="let element">
             {{ element.loginName }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="Password">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header >Password</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
           <td mat-cell *matCellDef="let element">
             {{ element.password }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="Observation">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header >Observation</th>
-          <td mat-cell *matCellDef="let element" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Observation</th>
+          <td mat-cell *matCellDef="let element">
             {{ element.observation }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="Action">
-          <th mat-header-cell *matHeaderCellDef >Actions</th>
-          <td mat-cell *matCellDef="let element" >
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
             <button
               mat-icon-button
               matTooltip="{{ 'Change record ' + element.loginName }}"
@@ -116,7 +131,10 @@
           <td class="mat-cell" colspan="4">No records...</td>
         </tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" showFirstLastButtons></mat-paginator>
+      <mat-paginator
+        [pageSizeOptions]="[10, 30, 50, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </div>
 </div>

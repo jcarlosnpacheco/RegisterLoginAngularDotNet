@@ -18,6 +18,7 @@ export class RegisterLoginInputComponent implements OnInit {
   @Output() submitted = new EventEmitter<any>();
 
   registerLoginForm: any;
+  hide = true;
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,6 @@ export class RegisterLoginInputComponent implements OnInit {
   }
 
   ngOnInit() {
-
     if (this.registerLoginId > 0) {
       this.registerLogin.getById(this.registerLoginId).subscribe((register) => {
         this.registerLoginForm.patchValue(register);
@@ -45,10 +45,13 @@ export class RegisterLoginInputComponent implements OnInit {
   createForm(registerLoginId: number) {
     this.registerLoginForm = this.fb.group({
       id: [registerLoginId],
-      loginName: [null,Validators.compose([Validators.required, Validators.maxLength(50)])],
-      password: [null,Validators.compose([Validators.required])],
-      observation: [null],
-      loginTypeId: [1]
+      loginName: [
+        null,
+        Validators.compose([Validators.required, Validators.maxLength(50)]),
+      ],
+      password: [null, Validators.compose([Validators.required])],
+      observation: [],
+      loginTypeId: [1],
     });
   }
 
